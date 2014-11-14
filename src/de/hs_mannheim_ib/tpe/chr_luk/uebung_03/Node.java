@@ -34,7 +34,7 @@ public class Node<K, V> {
 		if (this.k instanceof String) {
 			String tmp = (String) k;
 	
-			System.out.println("master");
+			System.out.println("test");
 
 		}
 		if (k instanceof Number) {

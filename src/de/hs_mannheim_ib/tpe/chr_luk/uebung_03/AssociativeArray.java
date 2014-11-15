@@ -8,8 +8,8 @@ public interface AssociativeArray<K,V,B> {
 	
 
 	void clear();
-	boolean containsValue();
-	boolean containsKey();
+	boolean containsValue(V v);
+	boolean containsKey(K k);
 	V get(K k);
 	boolean isEmpty();
 	void put(K k , V v);

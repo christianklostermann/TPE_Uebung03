@@ -7,14 +7,13 @@ public class Node<K, V> {
 	final K k;
 	final V v;
 
-	public Node(K k,V v, Node<K, V> left, Node<K, V> right) {
+	public Node(K k, V v, Node<K, V> left, Node<K, V> right) {
 		this.k = k;
 		this.v = v;
 		this.left = left;
 		this.right = right;
 
 	}
-
 
 	/**
 	 * @return the k
@@ -31,22 +30,31 @@ public class Node<K, V> {
 	}
 
 	public int compareTo(K k) {
-		if (this.k instanceof String) {
-			String tmp = (String) k;
-	
-			System.out.println("test");
+		if (this.k instanceof String && k instanceof String) {
+			String tmp1 = (String) k;
+			String tmp2 = (String) this.k;
 
-		}
-		if (k instanceof Number) {
+			return tmp1.compareToIgnoreCase(tmp2);
+		} else if (this.k instanceof Number && k instanceof Number) {
+			Number tmp1 = (Number) k;
+			Number tmp2 = (Number) this.k;
 
-		}
-		if (k instanceof Boolean) {
+			if (tmp1.equals(tmp2)) {
+				return 0;
+			} else if (tmp1.longValue() > tmp2.longValue()) {
 
-		}
-		if (k instanceof Character) {
+				return -1;
+			} else {
+				return 1;
+			}
 
+		} else if (this.k instanceof Character && k instanceof Character) {
+			Character tmp1 = (Character) k;
+			Character tmp2 = (Character) this.k;
+
+			return tmp1.compareTo(tmp2);
 		}
-		return 0;
+		return -2;
 	}
 
 }

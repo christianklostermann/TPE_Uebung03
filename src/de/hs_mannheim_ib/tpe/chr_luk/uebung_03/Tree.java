@@ -76,13 +76,14 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 					return; // element in tree
 				} else if (child.compareTo(k) < 0) {
 					child = child.left; // left sub tree
-				} else
+				} else if(child.compareTo(k) > 0){
 					// i.compareTo (child.value) > 0
 					child = child.right;// right sub tree
+				}
 			}
 
 			// parent node found
-			if (child.compareTo(k) < 0) {
+			if (parent.compareTo(k) < 0) {
 				// insert left from parent
 				parent.left = new Node(k, v, null, null);
 			} else {
@@ -225,7 +226,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 		return newTmp;
 	}
-
+@Override
 	public boolean containsKey(K k) {
 
 		Node tmp = root;
@@ -233,7 +234,8 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 		while (tmp != null) {
 
-			if (tmp.compareTo(k) == 0) {
+			if (tmp.compareTo(k) ==  0) {
+			
 				return true;
 			}
 			if (tmp.compareTo(k) < 0) {
@@ -246,6 +248,28 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 		return false;
 	}
+@Override
+public boolean containsValue(V v) {
+
+	Node tmp = root;
+	
+
+	while (tmp != null) {
+
+		if (tmp.compareTo(v) ==  0) {
+		
+			return true;
+		}
+		if (tmp.compareTo(v) < 0) {
+			tmp = tmp.right;
+		} else {
+			tmp = tmp.left;
+		}
+
+	}
+
+	return false;
+}
 
 	public void printTree() {
 		System.out.println();
@@ -310,17 +334,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 	}
 
-	@Override
-	public boolean containsValue() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean containsKey() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public V get(K k) {
@@ -369,5 +383,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

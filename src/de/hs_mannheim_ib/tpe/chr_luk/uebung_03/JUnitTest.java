@@ -22,6 +22,8 @@ public class JUnitTest {
 		System.out.println(tree.containsKey(o.hashCode()));
 		System.out.println(tree.containsKey("HALLO"));
 		
+		System.out.println(tree.size());
+		
 		
 
 		tree.printTree();

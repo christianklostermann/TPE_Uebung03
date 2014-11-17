@@ -2,16 +2,17 @@ package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
 public class Node<K, V> {
 
-	public Node<K, V> left;
-	public Node<K, V> right;
+	private Node<K, V> left;
+	private Node<K, V> right;
+	
 	final K k;
 	final V v;
 
 	public Node(K k, V v, Node<K, V> left, Node<K, V> right) {
 		this.k = k;
 		this.v = v;
-		this.left = left;
-		this.right = right;
+		this.setLeft(left);
+		this.setRight(right);
 
 	}
 
@@ -54,7 +55,23 @@ public class Node<K, V> {
 
 			return tmp1.compareTo(tmp2);
 		}
-		return -2;
+		return 0;
 	}
+
+	public Node<K, V> getLeft() {
+	    return left;
+    }
+
+	public void setLeft(Node<K, V> left) {
+	    this.left = left;
+    }
+
+	public Node<K, V> getRight() {
+	    return right;
+    }
+
+	public void setRight(Node<K, V> right) {
+	    this.right = right;
+    }
 
 }

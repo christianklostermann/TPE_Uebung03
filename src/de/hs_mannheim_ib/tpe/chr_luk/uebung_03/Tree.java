@@ -5,6 +5,7 @@ import java.util.Map;
 public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 	private Node<K, V> root;
+	private int nodeCount;
 
 	public Tree() {
 		root = null;
@@ -25,7 +26,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 		if (root != null) {
 			Tree t = new Tree();
-			t.root = root.left;
+			t.root = root.getLeft();
 			return t;
 		} else {
 			return null;
@@ -37,14 +38,14 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 		if (this.isEmpty()) {
 			this.root = t.root;
 		} else {
-			this.root.left = t.root.left;
+			this.root.setLeft(t.root.getLeft());
 		}
 	}
 
 	private Tree getRight() {
 		if (root != null) {
 			Tree t = new Tree();
-			t.root = root.right;
+			t.root.setRight(root.getRight());
 			return t;
 		} else {
 			return null;
@@ -56,7 +57,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 		if (this.isEmpty()) {
 			this.root = t.root;
 		} else {
-			this.root.right = t.root.right;
+			this.root.setRight(t.root.getRight());
 		}
 	}
 
@@ -75,20 +76,20 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 				if (child.compareTo(k) == 0) {
 					return; // element in tree
 				} else if (child.compareTo(k) < 0) {
-					child = child.left; // left sub tree
-				} else if(child.compareTo(k) > 0){
+					child = child.getLeft(); // left sub tree
+				} else if (child.compareTo(k) > 0) {
 					// i.compareTo (child.value) > 0
-					child = child.right;// right sub tree
+					child = child.getRight();// right sub tree
 				}
 			}
 
 			// parent node found
 			if (parent.compareTo(k) < 0) {
 				// insert left from parent
-				parent.left = new Node(k, v, null, null);
+				parent.setLeft(new Node(k, v, null, null));
 			} else {
 				// insert right from parent
-				parent.right = new Node(k, v, null, null);
+				parent.setRight(new Node(k, v, null, null));
 			}
 		}
 	}
@@ -113,10 +114,10 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 				parent = child;
 
 				if (child.compareTo(k) < 0) {
-					child = child.right;
+					child = child.getRight();
 
 				} else if (child.compareTo(k) > 0) {
-					child = child.left;
+					child = child.getLeft();
 
 				}
 
@@ -126,69 +127,78 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 			if (child != null) {
 				if (root.compareTo(k) == 0) {
 
-					if (root.left == null) {
-						root = root.right;
-					} else if (root.right == null) {
-						root = root.left;
-					} else if (root.right != null && root.left != null) {
+					if (root.getLeft() == null) {
+						root = root.getRight();
+					} else if (root.getRight() == null) {
+						root = root.getLeft();
+					} else if (root.getRight() != null
+					        && root.getLeft() != null) {
 						Node big = getBiggestElemLeftSubT(root);
-						big.left = root.left;
-						big.right = root.right;
+						big.setLeft(root.getLeft());
+						big.setRight(root.getRight());
 						root = big;
 
 					}
 
 					// is leaf
-				} else if (child.right == null && child.left == null) {
+				} else if (child.getRight() == null && child.getLeft() == null) {
 
-					if (parent.left != null && parent.left.equals(child)) {
-						value = (V) parent.left.getV();
-						parent.left = null;
+					if (parent.getLeft() != null
+					        && parent.getLeft().equals(child)) {
+						value = (V) parent.getLeft().getV();
+						parent.setLeft(null);
 
 					}
-					if (parent.right != null && parent.right.equals(child)) {
-						value = (V) parent.right.getV();
-						parent.right = null;
+					if (parent.getRight() != null
+					        && parent.getRight().equals(child)) {
+						value = (V) parent.getRight().getV();
+						parent.setRight(null);
 					}
 					// game is inner Node
-				} else if (child.right != null || child.left != null) {
+				} else if (child.getRight() != null || child.getLeft() != null) {
 
-					if (child.left == null) {
+					if (child.getLeft() == null) {
 
-						if (parent.left != null && parent.left.equals(child)) {
-							value = (V) parent.left.getV();
-							parent.left = child.right;
+						if (parent.getLeft() != null
+						        && parent.getLeft().equals(child)) {
+							value = (V) parent.getLeft().getV();
+							parent.setLeft(child.getRight());
 						}
-						if (parent.right != null && parent.right.equals(child)) {
-							value = (V) parent.right.getV();
-							parent.right = child.right;
+						if (parent.getRight() != null
+						        && parent.getRight().equals(child)) {
+							value = (V) parent.getRight().getV();
+							parent.setRight(child.getRight());
 						}
-					} else if (child.right == null && parent != null) {
+					} else if (child.getRight() == null && parent != null) {
 
-						if (parent.left != null && parent.left.equals(child)) {
-							value = (V) parent.left.getV();
-							parent.left = child.left;
+						if (parent.getLeft() != null
+						        && parent.getLeft().equals(child)) {
+							value = (V) parent.getLeft().getV();
+							parent.setLeft(child.getLeft());
 						}
-						if (parent.right != null && parent.right.equals(child)) {
-							value = (V) parent.right.getV();
-							parent.right = child.left;
+						if (parent.getRight() != null
+						        && parent.getRight().equals(child)) {
+							value = (V) parent.getRight().getV();
+							parent.setRight(child.getLeft());
 						}
 					} else if (child != null && parent != null) {
 
-						if (parent.left != null && parent.left.equals(child)) {
-							value = (V) parent.left.getV();
+						if (parent.getLeft() != null
+						        && parent.getLeft().equals(child)) {
+							value = (V) parent.getLeft().getV();
 							Node big = getBiggestElemLeftSubT(child);
-							parent.left = big;
-							big.left = child.left;
-							big.right = child.right;
+							parent.setLeft(big);
+							big.setLeft(child.getLeft());
+							big.setRight(child.getRight());
 						}
-						if (parent.right != null && parent.right.equals(child)) {
-							value = (V) parent.right.getV();
+						if (parent.getRight() != null
+						        && parent.getRight().equals(child)) {
+							value = (V) parent.getRight().getV();
 							Node big = getBiggestElemLeftSubT(child);
-							parent.right = big;
+							parent.setRight(big);
 
-							big.left = child.left;
-							big.right = child.right;
+							big.setLeft(child.getLeft());
+							big.setRight(child.getRight());
 						}
 
 					}
@@ -204,72 +214,77 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 		// go ones left and then only right
 		Node tmpParent = child;
-		Node tmp = child.left;
+		Node tmp = child.getLeft();
 
-		while (tmp.right != null) {
+		while (tmp.getRight() != null) {
 
 			tmpParent = tmp;
-			tmp = tmp.right;
+			tmp = tmp.getRight();
 		}
 
 		// proves if child has left node
 		// add it to the right side of par.
-		if (tmp.left != null) {
-			tmpParent.right = tmp.left;
+		if (tmp.getLeft() != null) {
+			tmpParent.setRight(tmp.getLeft());
 		} else {
 
-			tmpParent.right = null;
+			tmpParent.setRight(null);
 		}
 
-		Node newTmp = new Node(tmp.getK(),tmp.getV(), tmp.left, tmp.right);
+		Node newTmp = new Node(tmp.getK(), tmp.getV(), tmp.getLeft(),
+		        tmp.getRight());
 		tmp = null;
 
 		return newTmp;
 	}
-@Override
+
+	@Override
 	public boolean containsKey(K k) {
 
 		Node tmp = root;
-		
 
-		while (tmp != null) {
+		if (tmp.getK().equals(k)) {
 
-			if (tmp.compareTo(k) ==  0) {
-			
-				return true;
+			while (tmp != null) {
+
+				if (tmp.compareTo(k) == 0) {
+
+					return true;
+				}
+				if (tmp.compareTo(k) < 0) {
+					tmp = tmp.getRight();
+				} else {
+					tmp = tmp.getLeft();
+				}
+
 			}
-			if (tmp.compareTo(k) < 0) {
-				tmp = tmp.right;
-			} else {
-				tmp = tmp.left;
-			}
-
 		}
-
 		return false;
 	}
-@Override
-public boolean containsValue(V v) {
 
-	Node tmp = root;
-	
+	@Override
+	public boolean containsValue(V v) {
 
-	while (tmp != null) {
+		Node tmp = root;
 
-		if (tmp.compareTo(v) ==  0) {
-		
-			return true;
+		if (tmp.getV().equals(v)) {
+
+			while (tmp != null) {
+
+				if (tmp.compareTo(v) == 0) {
+
+					return true;
+				}
+				if (tmp.compareTo(v) < 0) {
+					tmp = tmp.getRight();
+				} else {
+					tmp = tmp.getLeft();
+				}
+
+			}
 		}
-		if (tmp.compareTo(v) < 0) {
-			tmp = tmp.right;
-		} else {
-			tmp = tmp.left;
-		}
-
+		return false;
 	}
-
-	return false;
-}
 
 	public void printTree() {
 		System.out.println();
@@ -286,16 +301,14 @@ public boolean containsValue(V v) {
 			distance += " ";
 		}
 		if (root != null) {
-			printhelper(root.right, level + 1);
-			System.out
-			        .println(distance + "[" + level + "]" + root.hashCode());
-			printhelper(root.left, level + 1);
+			printhelper(root.getRight(), level + 1);
+			System.out.println(distance + "[" + level + "]" + root.hashCode());
+			printhelper(root.getLeft(), level + 1);
 		}
 	}
 
 	public Node depthFirstSearch(K k) {
 
-	
 		return DFS2(root, k);
 	}
 
@@ -306,16 +319,15 @@ public boolean containsValue(V v) {
 
 		if (node != null) {
 
-		
 			if (node.equals(k)) {
 
 				return node;
 			}
 
-			left = DFS2(node.left, k);
+			left = DFS2(node.getLeft(), k);
 
 			if (left == null) {
-				right = DFS2(node.right, k);
+				right = DFS2(node.getRight(), k);
 			}
 
 		}
@@ -330,15 +342,31 @@ public boolean containsValue(V v) {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		this.root = null;
 
 	}
 
-
-
 	@Override
 	public V get(K k) {
-		// TODO Auto-generated method stub
+		Node tmp = root;
+
+		if (tmp.getK().equals(k)) {
+
+			while (tmp != null) {
+
+				if (tmp.compareTo(k) == 0) {
+
+					return (V) tmp.getV();
+				}
+				if (tmp.compareTo(k) < 0) {
+					tmp = tmp.getRight();
+				} else {
+					tmp = tmp.getLeft();
+				}
+
+			}
+		}
+
 		return null;
 	}
 
@@ -355,9 +383,16 @@ public boolean containsValue(V v) {
 	}
 
 	@Override
-	public long size() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int size() {
+		return (size(this.root));
+	}
+
+	private int size(Node node) {
+		if (node == null)
+			return (0);
+		else {
+			return (size(node.getLeft()) + 1 + size(node.getRight()));
+		}
 	}
 
 	@Override
@@ -383,7 +418,5 @@ public boolean containsValue(V v) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

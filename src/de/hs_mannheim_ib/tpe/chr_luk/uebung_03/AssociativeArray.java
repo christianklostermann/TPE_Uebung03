@@ -15,7 +15,7 @@ public interface AssociativeArray<K,V,B> {
 	void put(K k , V v);
 	void putAll(Map m);
 	V remove(K k);
-	long size();
+	int size();
 	void update(K k, V v);
 	void forEach(B b);
 	void extractAll(Map m);

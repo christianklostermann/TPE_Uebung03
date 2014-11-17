@@ -4,9 +4,10 @@ public class Node<K, V> {
 
 	private Node<K, V> left;
 	private Node<K, V> right;
-	
-	final K k;
-	final V v;
+
+	private K k;
+
+	private V v;
 
 	public Node(K k, V v, Node<K, V> left, Node<K, V> right) {
 		this.k = k;
@@ -59,19 +60,34 @@ public class Node<K, V> {
 	}
 
 	public Node<K, V> getLeft() {
-	    return left;
-    }
+		return left;
+	}
 
 	public void setLeft(Node<K, V> left) {
-	    this.left = left;
-    }
+		this.left = left;
+	}
 
 	public Node<K, V> getRight() {
-	    return right;
-    }
+		return right;
+	}
 
 	public void setRight(Node<K, V> right) {
-	    this.right = right;
-    }
+		this.right = right;
+	}
 
+	/**
+	 * @param k
+	 *            the k to set
+	 */
+	public void setK(K k) {
+		this.k = k;
+	}
+
+	/**
+	 * @param v
+	 *            the v to set
+	 */
+	public void setV(V v) {
+		this.v = v;
+	}
 }

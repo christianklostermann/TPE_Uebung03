@@ -1,7 +1,6 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 public interface AssociativeArray<K,V,B> {
 	
@@ -13,12 +12,12 @@ public interface AssociativeArray<K,V,B> {
 	V get(K k);
 	boolean isEmpty();
 	void put(K k , V v);
-	void putAll(Map m);
+	void putAll(B b);
 	V remove(K k);
 	int size();
 	void update(K k, V v);
-	void forEach(B b);
-	void extractAll(Map m);
-	Map map(B b);
+	void forEach(BiConsumer<K,V> biConsumer);	
+	B map(B b);
+	void extractAll(B b);
 	
 }

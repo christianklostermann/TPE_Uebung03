@@ -2,7 +2,8 @@ package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
 import java.util.Map;
 
-public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
+public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
+        BiConsumer<K, V> {
 
 	private Node<K, V> root;
 	private int nodeCount;
@@ -17,6 +18,7 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 	}
 
+	@Override
 	public boolean isEmpty() {
 
 		return (root == null);
@@ -348,37 +350,12 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 	@Override
 	public V get(K k) {
-		Node tmp = root;
-
-		if (tmp.getK().equals(k)) {
-
-			while (tmp != null) {
-
-				if (tmp.compareTo(k) == 0) {
-
-					return (V) tmp.getV();
-				}
-				if (tmp.compareTo(k) < 0) {
-					tmp = tmp.getRight();
-				} else {
-					tmp = tmp.getLeft();
-				}
-
-			}
-		}
-
-		return null;
+		return this.getNode(k).getV();
 	}
 
 	@Override
 	public void put(K k, V v) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void putAll(Map m) {
-		// TODO Auto-generated method stub
+		this.insert(k, v);
 
 	}
 
@@ -397,26 +374,77 @@ public class Tree<K, V, B, T> implements AssociativeArray<K, V, B> {
 
 	@Override
 	public void update(K k, V v) {
-		// TODO Auto-generated method stub
+		this.getNode(k).setV(v);
+	}
+
+	private Node<K, V> getNode(K k) {
+		Node tmp = root;
+
+		if (tmp.getK().equals(k)) {
+
+			while (tmp != null) {
+
+				if (tmp.compareTo(k) == 0) {
+
+					return tmp;
+				}
+				if (tmp.compareTo(k) < 0) {
+					tmp = tmp.getRight();
+				} else {
+					tmp = tmp.getLeft();
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void forEach(BiConsumer<K, V> biConsumer) {
+
+	//	biConsumer.accept(k, v);
 
 	}
 
 	@Override
-	public void forEach(B b) {
-		// TODO Auto-generated method stub
+	public void putAll(B b) {
+		if (b instanceof Tree) {
+			this.putAll(((Tree) b).getRoot());
+		}
+	}
 
+	/**
+	 * @return the root
+	 */
+	private Node<K, V> getRoot() {
+		return this.root;
+	}
+
+	private void putAll(Node<K, V> node) {
+		if (node != null) {
+			this.put(node.getK(), node.getV());
+		}
+		if (node != null) {
+			putAll(node.getLeft());
+			putAll(node.getRight());
+		}
 	}
 
 	@Override
-	public void extractAll(Map m) {
-		// TODO Auto-generated method stub
-
+	public void extractAll(B b) {
+		if (b instanceof Tree) {
+			((Tree) b).putAll(this.root);
+		}
 	}
 
 	@Override
-	public Map map(B b) {
+	public B map(B b) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void accept(K k, V v) {
+
 	}
 
 }

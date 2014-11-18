@@ -19,10 +19,10 @@ public class JUnitTest<K, V> {
 		String o4 = new String();
 		o4 = "4";
 
-		tree.insert(o.hashCode(), o);
-		tree.insert(o2.hashCode(), o2);
-		tree2.insert(o3.hashCode(), o3);
-		tree2.insert(o4.hashCode(), o4);
+		tree.put(o.hashCode(), o);
+		tree.put(o2.hashCode(), o2);
+		tree2.put(o3.hashCode(), o3);
+		tree2.put(o4.hashCode(), o4);
 
 		System.out.println(tree.containsKey(o.hashCode()));
 		System.out.println(tree.containsKey("HALLO"));

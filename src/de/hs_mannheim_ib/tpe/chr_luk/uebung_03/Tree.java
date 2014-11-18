@@ -1,5 +1,8 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+
 public class Tree<K, V> implements AssociativeArray<K, V>,
         BiConsumer<K, V> {
 
@@ -490,7 +493,7 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	}
 
 	@Override
-	public AssociativeArray map(AssociativeArray b) {
+	public AssociativeArray<K,V> map(AssociativeArray b) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -499,5 +502,11 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	public void accept(K k, V v) {
 
 	}
+
+	@Override
+    public AssociativeArray<K, V> map(BiFunction<K, V, K> biFunction) {
+	    // TODO Auto-generated method stub
+	    return null;
+    }
 
 }

@@ -7,7 +7,7 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
         BiConsumer<K, V> {
 
 	private Node<K, V> root;
-	private int nodeCount;
+
 
 	public Tree() {
 		this.root = null;
@@ -18,7 +18,8 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 		this.root = new Node<K,V>(k, v, null, null);
 
 	}
-	class Node<K, V> {
+	@SuppressWarnings("hiding")
+    class Node<K, V> {
 
 		private Node<K, V> left;
 		private Node<K, V> right;
@@ -461,7 +462,7 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	}
 
 	@Override
-	public void putAll(AssociativeArray b) {
+	public void putAll(AssociativeArray<K, V> b) {
 		if (b instanceof Tree) {
 			Tree<K, V> tree = (Tree<K, V>) b;
 			this.putAll(tree.getRoot());
@@ -486,14 +487,14 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	}
 
 	@Override
-	public void extractAll(AssociativeArray b) {
+	public void extractAll(AssociativeArray<K, V> b) {
 		if (b instanceof Tree) {
 			((Tree<K, V>) b).putAll(this.root);
 		}
 	}
 
 	@Override
-	public AssociativeArray<K,V> map(AssociativeArray b) {
+	public AssociativeArray<K,V> map(AssociativeArray<K, V> b) {
 		// TODO Auto-generated method stub
 		return null;
 	}

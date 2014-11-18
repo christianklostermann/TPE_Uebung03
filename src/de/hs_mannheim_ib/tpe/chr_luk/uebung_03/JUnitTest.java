@@ -1,14 +1,14 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
 import org.junit.Test;
-import org.junit.Assert.*;
+
 
 public class JUnitTest<K, V> {
 
 	@Test
 	public void test() {
-		Tree tree = new Tree<>();
-		Tree tree2 = new Tree<>();
+		Tree<Object, Object> tree = new Tree<>();
+		Tree<Object, Object> tree2 = new Tree<>();
 
 		String o = new String();
 		o = "1";

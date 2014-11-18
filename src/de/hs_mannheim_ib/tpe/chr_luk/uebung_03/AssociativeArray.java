@@ -22,6 +22,6 @@ public interface AssociativeArray<K,V> {
 	void forEach(BiConsumer<K,V> biConsumer);	
 	AssociativeArray<K, V> map(BiFunction<K,V,K>biFunction);
 	void extractAll(AssociativeArray<K, V>associativeArray);
-	AssociativeArray<K, V> map(AssociativeArray b);
+	AssociativeArray<K, V> map(AssociativeArray<K, V> b);
 	
 }

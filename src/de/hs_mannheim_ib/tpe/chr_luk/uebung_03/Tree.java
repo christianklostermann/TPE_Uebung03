@@ -27,10 +27,10 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	public void insert(K k, V v) {
 
 		if (k != null && v != null) {
-			Node parent = null; // parent of child
-			Node child = this.root;
+			Node<K, V> parent = null; // parent of child
+			Node<K, V> child = this.root;
 			if (child == null) { // empty tree
-				root = new Node(k, v, null, null);
+				root = new Node<K, V>(k, v, null, null);
 				return;
 			}
 
@@ -49,18 +49,18 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			// parent node found
 			if (parent.compareTo(k) < 0) {
 				// insert left from parent
-				parent.setLeft(new Node(k, v, null, null));
+				parent.setLeft(new Node<K, V>(k, v, null, null));
 			} else {
 				// insert right from parent
-				parent.setRight(new Node(k, v, null, null));
+				parent.setRight(new Node<K, V>(k, v, null, null));
 			}
 		}
 	}
 
 	@Override
 	public V remove(K k) {
-		Node parent = null; // parent of child
-		Node child = this.root;
+		Node<K, V> parent = null; // parent of child
+		Node<K, V> child = this.root;
 		V value = null;
 
 		if (this.root != null && child != null && k != null) {
@@ -108,13 +108,13 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 
 					if (parent.getLeft() != null
 					        && parent.getLeft().equals(child)) {
-						value = (V) parent.getLeft().getV();
+						value = parent.getLeft().getV();
 						parent.setLeft(null);
 
 					}
 					if (parent.getRight() != null
 					        && parent.getRight().equals(child)) {
-						value = (V) parent.getRight().getV();
+						value = parent.getRight().getV();
 						parent.setRight(null);
 					}
 					// game is inner Node
@@ -124,40 +124,40 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value = (V) parent.getLeft().getV();
+							value = parent.getLeft().getV();
 							parent.setLeft(child.getRight());
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value = (V) parent.getRight().getV();
+							value = parent.getRight().getV();
 							parent.setRight(child.getRight());
 						}
 					} else if (child.getRight() == null && parent != null) {
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value = (V) parent.getLeft().getV();
+							value = parent.getLeft().getV();
 							parent.setLeft(child.getLeft());
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value = (V) parent.getRight().getV();
+							value = parent.getRight().getV();
 							parent.setRight(child.getLeft());
 						}
 					} else if (child != null && parent != null) {
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value = (V) parent.getLeft().getV();
-							Node big = getBiggestElemLeftSubT(child);
+							value = parent.getLeft().getV();
+							Node<K, V> big = getBiggestElemLeftSubT(child);
 							parent.setLeft(big);
 							big.setLeft(child.getLeft());
 							big.setRight(child.getRight());
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value = (V) parent.getRight().getV();
-							Node big = getBiggestElemLeftSubT(child);
+							value = parent.getRight().getV();
+							Node<K, V> big = getBiggestElemLeftSubT(child);
 							parent.setRight(big);
 
 							big.setLeft(child.getLeft());
@@ -173,11 +173,11 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		return value;
 	}
 
-	private Node getBiggestElemLeftSubT(Node child) {
+	private Node<K, V> getBiggestElemLeftSubT(Node<K, V> child) {
 
 		// go ones left and then only right
-		Node tmpParent = child;
-		Node tmp = child.getLeft();
+		Node<K, V> tmpParent = child;
+		Node<K, V> tmp = child.getLeft();
 
 		while (tmp.getRight() != null) {
 
@@ -194,7 +194,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			tmpParent.setRight(null);
 		}
 
-		Node newTmp = new Node(tmp.getK(), tmp.getV(), tmp.getLeft(),
+		Node<K,V> newTmp = new Node<K, V>(tmp.getK(), tmp.getV(), tmp.getLeft(),
 		        tmp.getRight());
 		tmp = null;
 
@@ -369,7 +369,8 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public void putAll(B b) {
 		if (b instanceof Tree) {
-			this.putAll(((Tree) b).getRoot());
+			Tree<K, V, B> tree = (Tree<K, V, B>) b;
+			this.putAll(tree.getRoot());
 		}
 	}
 
@@ -393,7 +394,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public void extractAll(B b) {
 		if (b instanceof Tree) {
-			((Tree) b).putAll(this.root);
+			((Tree<K, V, ?>) b).putAll(this.root);
 		}
 	}
 

@@ -204,7 +204,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public boolean containsKey(K k) {
 
-		Node tmp = root;
+		Node<K,V> tmp = root;
 
 		if (tmp.getK().equals(k)) {
 
@@ -228,25 +228,27 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public boolean containsValue(V v) {
 
-		Node tmp = root;
-
-		if (tmp.getV().equals(v)) {
-
-			while (tmp != null) {
-
-				if (tmp.compareTo(v) == 0) {
-
-					return true;
-				}
-				if (tmp.compareTo(v) < 0) {
-					tmp = tmp.getRight();
-				} else {
-					tmp = tmp.getLeft();
-				}
-
-			}
+	
+		if( this.search(this.root, v) != null){
+			return true;
+		}else{
+			return false;
 		}
-		return false;
+	
+	}
+	
+	private Node<K,V> search(Node<K,V> node, V value){
+		if(node == null){
+			return null;
+		}
+		if(node.getV().equals(value)){
+			return node;
+		}	
+		if (node != null) {
+			search(node.getLeft(),value);
+			search(node.getRight(),value);
+		}
+		return null;
 	}
 
 	public void printTree() {
@@ -258,7 +260,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		System.out.println();
 	}
 
-	private void printhelper(Node root, int level) {
+	private void printhelper(Node<K,V> root, int level) {
 		String distance = "";
 		for (int i = 0; i < level; i++) {
 			distance += " ";
@@ -270,15 +272,15 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		}
 	}
 
-	public Node depthFirstSearch(K k) {
+	public Node<K,V> depthFirstSearch(K k) {
 
 		return DFS2(root, k);
 	}
 
-	private Node DFS2(Node node, K k) {
+	private Node<K,V> DFS2(Node<K,V> node, K k) {
 
-		Node left = null;
-		Node right = null;
+		Node<K,V> left = null;
+		Node<K,V> right = null;
 
 		if (node != null) {
 
@@ -325,7 +327,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		return (size(this.root));
 	}
 
-	private int size(Node node) {
+	private int size(Node<K,V> node) {
 		if (node == null)
 			return (0);
 		else {
@@ -339,7 +341,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	}
 
 	private Node<K, V> getNode(K k) {
-		Node tmp = root;
+		Node<K, V> tmp = root;
 
 		if (tmp.getK().equals(k)) {
 

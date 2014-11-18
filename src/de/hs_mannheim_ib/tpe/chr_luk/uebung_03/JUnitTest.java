@@ -28,10 +28,12 @@ public class JUnitTest<K, V> {
 		System.out.println(tree.containsKey("HALLO"));
 
 		System.out.println(tree.size());
-
+		System.out.println(tree.containsValue(o4));
 		tree.printTree();
 
 		tree.extractAll(tree2);
+		
+		
 
 		tree.putAll(tree2);
 		tree.printTree();

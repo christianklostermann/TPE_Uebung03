@@ -1,7 +1,5 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
-import java.util.Map;
-
 public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
         BiConsumer<K, V> {
 
@@ -9,65 +7,28 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	private int nodeCount;
 
 	public Tree() {
-		root = null;
+		this.root = null;
 
 	}
 
 	public Tree(K k, V v) {
-		root = new Node(k, v, null, null);
+		this.root = new Node<K,V>(k, v, null, null);
 
 	}
 
 	@Override
 	public boolean isEmpty() {
 
-		return (root == null);
+		return (this.root == null);
 	}
 
-	private Tree getLeft() {
-
-		if (root != null) {
-			Tree t = new Tree();
-			t.root = root.getLeft();
-			return t;
-		} else {
-			return null;
-		}
-
-	}
-
-	private void setLeft(Tree t) {
-		if (this.isEmpty()) {
-			this.root = t.root;
-		} else {
-			this.root.setLeft(t.root.getLeft());
-		}
-	}
-
-	private Tree getRight() {
-		if (root != null) {
-			Tree t = new Tree();
-			t.root.setRight(root.getRight());
-			return t;
-		} else {
-			return null;
-		}
-
-	}
-
-	private void setRight(Tree t) {
-		if (this.isEmpty()) {
-			this.root = t.root;
-		} else {
-			this.root.setRight(t.root.getRight());
-		}
-	}
+	
 
 	public void insert(K k, V v) {
 
 		if (k != null && v != null) {
 			Node parent = null; // parent of child
-			Node child = root;
+			Node child = this.root;
 			if (child == null) { // empty tree
 				root = new Node(k, v, null, null);
 				return;
@@ -99,10 +60,10 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public V remove(K k) {
 		Node parent = null; // parent of child
-		Node child = root;
+		Node child = this.root;
 		V value = null;
 
-		if (root != null && child != null && k != null) {
+		if (this.root != null && child != null && k != null) {
 
 			// search game element, save parent and child nodes
 
@@ -127,17 +88,17 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 
 			// no empty tree and game is part of tree
 			if (child != null) {
-				if (root.compareTo(k) == 0) {
+				if (this.root.compareTo(k) == 0) {
 
-					if (root.getLeft() == null) {
-						root = root.getRight();
-					} else if (root.getRight() == null) {
-						root = root.getLeft();
-					} else if (root.getRight() != null
-					        && root.getLeft() != null) {
-						Node big = getBiggestElemLeftSubT(root);
-						big.setLeft(root.getLeft());
-						big.setRight(root.getRight());
+					if (this.root.getLeft() == null) {
+						this.root = this.root.getRight();
+					} else if (this.root.getRight() == null) {
+						this.root = this.root.getLeft();
+					} else if (this.root.getRight() != null
+					        && this.root.getLeft() != null) {
+						Node<K, V> big = getBiggestElemLeftSubT(this.root);
+						big.setLeft(this.root.getLeft());
+						big.setRight(this.root.getRight());
 						root = big;
 
 					}
@@ -400,8 +361,6 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 
 	@Override
 	public void forEach(BiConsumer<K, V> biConsumer) {
-
-	//	biConsumer.accept(k, v);
 
 	}
 

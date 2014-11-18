@@ -1,7 +1,10 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
-public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
-        BiConsumer<K, V> {
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+
+public class Tree<K, V> implements AssociativeArray<K, V>
+        {
 
 	private Node<K, V> root;
 	private int nodeCount;
@@ -15,13 +18,13 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		this.root = new Node<K,V>(k, v, null, null);
 
 	}
-
+/*
 	@Override
 	public boolean isEmpty() {
 
 		return (this.root == null);
 	}
-
+*/
 	
 
 	public void insert(K k, V v) {
@@ -56,7 +59,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			}
 		}
 	}
-
+	/*
 	@Override
 	public V remove(K k) {
 		Node<K, V> parent = null; // parent of child
@@ -171,7 +174,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			}
 		}
 		return value;
-	}
+	}*/
 
 	private Node<K, V> getBiggestElemLeftSubT(Node<K, V> child) {
 
@@ -201,7 +204,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		return newTmp;
 	}
 
-	@Override
+	/*@Override
 	public boolean containsKey(K k) {
 
 		Node<K,V> tmp = root;
@@ -235,7 +238,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			return false;
 		}
 	
-	}
+	}*/
 	
 	private Node<K,V> search(Node<K,V> node, V value){
 		if(node == null){
@@ -304,7 +307,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		}
 
 	}
-
+/*
 	@Override
 	public void clear() {
 		this.root = null;
@@ -339,7 +342,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	public void update(K k, V v) {
 		this.getNode(k).setV(v);
 	}
-
+*/
 	private Node<K, V> getNode(K k) {
 		Node<K, V> tmp = root;
 
@@ -361,7 +364,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public void forEach(BiConsumer<K, V> biConsumer) {
 
 	}
@@ -372,7 +375,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 			Tree<K, V, B> tree = (Tree<K, V, B>) b;
 			this.putAll(tree.getRoot());
 		}
-	}
+	}*/
 
 	/**
 	 * @return the root
@@ -380,7 +383,7 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	private Node<K, V> getRoot() {
 		return this.root;
 	}
-
+/*
 	private void putAll(Node<K, V> node) {
 		if (node != null) {
 			this.put(node.getK(), node.getV());
@@ -407,6 +410,84 @@ public class Tree<K, V, B> implements AssociativeArray<K, V, B>,
 	@Override
 	public void accept(K k, V v) {
 
+	}*/
+
+	@Override
+	public boolean containsValue(V v) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsKey(K k) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public V get(K k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void put(K k, V v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void putAll(AssociativeArray<K, V> associativeArray) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public V remove(K k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void update(K k, V v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void forEach(BiConsumer<K, V> biConsumer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public AssociativeArray<K, V> map(BiFunction<K, V, K> biFunction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void extractAll(AssociativeArray<K, V> associativeArray) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isEmpty() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

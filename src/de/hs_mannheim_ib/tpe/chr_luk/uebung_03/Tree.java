@@ -365,6 +365,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 			erg+= distance + "[" + level + "][#" + node.getK()+"~"+node.getV().toString()+"]";
 			erg+= printhelper(node.getLeft(), level + 1);
 		}
+		
 		return erg+"";
 	}
 

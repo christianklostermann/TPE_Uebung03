@@ -3,11 +3,9 @@ package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-public class Tree<K, V> implements AssociativeArray<K, V>,
-        BiConsumer<K, V> {
+public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	private Node<K, V> root;
-
 
 	public Tree() {
 		this.root = null;
@@ -15,11 +13,12 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	}
 
 	public Tree(K k, V v) {
-		this.root = new Node<K,V>(k, v, null, null);
+		this.root = new Node<K, V>(k, v, null, null);
 
 	}
+
 	@SuppressWarnings("hiding")
-    class Node<K, V> {
+	class Node<K, V> {
 
 		private Node<K, V> left;
 		private Node<K, V> right;
@@ -116,8 +115,6 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 
 		return (this.root == null);
 	}
-
-	
 
 	public void insert(K k, V v) {
 
@@ -289,8 +286,8 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 			tmpParent.setRight(null);
 		}
 
-		Node<K,V> newTmp = new Node<K, V>(tmp.getK(), tmp.getV(), tmp.getLeft(),
-		        tmp.getRight());
+		Node<K, V> newTmp = new Node<K, V>(tmp.getK(), tmp.getV(),
+		        tmp.getLeft(), tmp.getRight());
 		tmp = null;
 
 		return newTmp;
@@ -299,7 +296,7 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	@Override
 	public boolean containsKey(K k) {
 
-		Node<K,V> tmp = root;
+		Node<K, V> tmp = root;
 
 		if (tmp.getK().equals(k)) {
 
@@ -323,59 +320,63 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	@Override
 	public boolean containsValue(V v) {
 
-	
-		if( this.search(this.root, v) != null){
+		if (this.search(this.root, v) != null) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-	
+
 	}
-	
-	private Node<K,V> search(Node<K,V> node, V value){
-		if(node == null){
+
+	private Node<K, V> search(Node<K, V> node, V value) {
+		if (node == null) {
 			return null;
 		}
-		if(node.getV().equals(value)){
+		if (node.getV().equals(value)) {
 			return node;
-		}	
+		}
 		if (node != null) {
-			search(node.getLeft(),value);
-			search(node.getRight(),value);
+			search(node.getLeft(), value);
+			search(node.getRight(), value);
 		}
 		return null;
 	}
 
-	public void printTree() {
-		System.out.println();
-		System.out.println("Print Tree");
-		System.out.println("-------------");
-		printhelper(root, 0);
-		System.out.println("_____________");
-		System.out.println();
+	public String  toString() {
+		String erg = "";
+		
+		erg+="Print Tree\n";
+		erg+="-------------";
+		erg+=""+printhelper(this.root, 0);
+		erg+="_____________\n";
+		
+		
+		return erg;
 	}
 
-	private void printhelper(Node<K,V> root, int level) {
+	private String printhelper(Node<K, V> node, int level) {
 		String distance = "";
+		String erg="\n";
 		for (int i = 0; i < level; i++) {
 			distance += " ";
 		}
-		if (root != null) {
-			printhelper(root.getRight(), level + 1);
-			System.out.println(distance + "[" + level + "]" + root.hashCode());
-			printhelper(root.getLeft(), level + 1);
+		if (node != null) {
+			erg+= printhelper(node.getRight(), level + 1);
+			erg+= distance + "[" + level + "][#" + node.getK()+"~"+node.getV().toString()+"]";
+			erg+= printhelper(node.getLeft(), level + 1);
 		}
+		return erg+"";
 	}
 
-	public Node<K,V> depthFirstSearch(K k) {
+	public Node<K, V> depthFirstSearch(K k) {
 
 		return DFS2(root, k);
 	}
 
-	private Node<K,V> DFS2(Node<K,V> node, K k) {
+	private Node<K, V> DFS2(Node<K, V> node, K k) {
 
-		Node<K,V> left = null;
-		Node<K,V> right = null;
+		Node<K, V> left = null;
+		Node<K, V> right = null;
 
 		if (node != null) {
 
@@ -422,10 +423,10 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 		return (size(this.root));
 	}
 
-	private int size(Node<K,V> node) {
-		if (node == null)
-			return (0);
-		else {
+	private int size(Node<K, V> node) {
+		if (node == null) {
+			return 0;
+		} else {
 			return (size(node.getLeft()) + 1 + size(node.getRight()));
 		}
 	}
@@ -459,6 +460,17 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	@Override
 	public void forEach(BiConsumer<K, V> biConsumer) {
 
+		if (this.root != null) {
+			this.forEach(this.root, biConsumer);
+		}
+	}
+
+	private void forEach(Node<K, V> node, BiConsumer<K, V> biConsumer) {
+		if (node != null) {
+			biConsumer.accept(node.getK(), node.getV());
+			forEach(node.getLeft(), biConsumer);
+			forEach(node.getRight(), biConsumer);
+		}
 	}
 
 	@Override
@@ -479,8 +491,6 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	private void putAll(Node<K, V> node) {
 		if (node != null) {
 			this.put(node.getK(), node.getV());
-		}
-		if (node != null) {
 			putAll(node.getLeft());
 			putAll(node.getRight());
 		}
@@ -494,20 +504,25 @@ public class Tree<K, V> implements AssociativeArray<K, V>,
 	}
 
 	@Override
-	public AssociativeArray<K,V> map(AssociativeArray<K, V> b) {
-		// TODO Auto-generated method stub
+	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction) {
+		AssociativeArray<K, V> newTree = new Tree<K, V>();
+		return this.map(this.root, biFunction, newTree);
+
+	}
+
+	private AssociativeArray<K, V> map(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
+
+		if (node != null) {
+		
+			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+
+			this.map(node.left, biFunction, newTree);
+			this.map(node.right, biFunction, newTree);
+		}
+
 		return null;
-	}
-
-	@Override
-	public void accept(K k, V v) {
 
 	}
-
-	@Override
-    public AssociativeArray<K, V> map(BiFunction<K, V, K> biFunction) {
-	    // TODO Auto-generated method stub
-	    return null;
-    }
 
 }

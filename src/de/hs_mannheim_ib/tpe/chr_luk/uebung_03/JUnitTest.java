@@ -1,5 +1,8 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+
 import org.junit.Test;
 
 
@@ -7,8 +10,8 @@ public class JUnitTest<K, V> {
 
 	@Test
 	public void test() {
-		Tree<Object, Object> tree = new Tree<>();
-		Tree<Object, Object> tree2 = new Tree<>();
+		Tree<Number, String> tree = new Tree<>();
+		Tree<Number, String> tree2 = new Tree<>();
 
 		String o = new String();
 		o = "1";
@@ -25,20 +28,35 @@ public class JUnitTest<K, V> {
 		tree2.put(o4.hashCode(), o4);
 
 		System.out.println(tree.containsKey(o.hashCode()));
-		System.out.println(tree.containsKey("HALLO"));
+		System.out.println(tree.containsKey(564654));
 
 		System.out.println(tree.size());
 		System.out.println(tree.containsValue(o4));
-		tree.printTree();
+		System.out.println(tree.toString());
 
 		tree.extractAll(tree2);
 		
 		
 
 		tree.putAll(tree2);
-		tree.printTree();
+		System.out.println(tree.toString());
 
-		tree2.printTree();
+		System.out.println(tree2.toString());
+		
+		
+		BiConsumer biConsumer = (x,y)-> System.out.println(x);
+		
+		tree.forEach(biConsumer);
+		
+		System.out.println(biConsumer.getClass());
+		
+		BiFunction biFunction = (x,y) -> y+"AAA";
+		
+		AssociativeArray<Number, String> tree3 = tree.map(biFunction);
+		
+		System.out.println(tree2.toString());
+	    System.out.println(tree2.containsValue(o2));
+		tree3.toString();
 	}
 
 }

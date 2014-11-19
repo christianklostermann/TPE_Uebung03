@@ -20,8 +20,9 @@ public interface AssociativeArray<K,V> {
 	int size();
 	void update(K k, V v);
 	void forEach(BiConsumer<K,V> biConsumer);	
-	AssociativeArray<K, V> map(BiFunction<K,V,K>biFunction);
+	AssociativeArray<K, V> map(BiFunction<K,V,V>biFunction);
 	void extractAll(AssociativeArray<K, V>associativeArray);
-	AssociativeArray<K, V> map(AssociativeArray<K, V> b);
+	
+	
 	
 }

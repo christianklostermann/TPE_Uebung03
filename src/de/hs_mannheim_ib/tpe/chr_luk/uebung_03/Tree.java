@@ -520,9 +520,10 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 			this.map(node.left, biFunction, newTree);
 			this.map(node.right, biFunction, newTree);
+			
 		}
 
-		return null;
+		return newTree;
 
 	}
 

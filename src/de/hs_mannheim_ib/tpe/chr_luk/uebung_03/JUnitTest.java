@@ -7,11 +7,15 @@ import org.junit.Test;
 
 
 public class JUnitTest<K, V> {
+	
+	
+	
+
 
 	@Test
 	public void test() {
-		Tree<Number, String> tree = new Tree<>();
-		Tree<Number, String> tree2 = new Tree<>();
+		AssociativeArray<Number, String> tree = new Tree<>();
+		AssociativeArray<Number, String> tree2 = new Tree<>();
 
 		String o = new String();
 		o = "1";
@@ -40,23 +44,23 @@ public class JUnitTest<K, V> {
 
 		tree.putAll(tree2);
 		System.out.println(tree.toString());
-
 		System.out.println(tree2.toString());
 		
 		
-		BiConsumer biConsumer = (x,y)-> System.out.println(x);
+		BiConsumer biConsumer = (x,y)-> {};
 		
 		tree.forEach(biConsumer);
 		
-		System.out.println(biConsumer.getClass());
-		
+
+	
 		BiFunction biFunction = (x,y) -> y+"AAA";
 		
-		AssociativeArray<Number, String> tree3 = tree.map(biFunction);
+		AssociativeArray<Number, String> tree3 = tree2.map(biFunction);
+		System.out.println(tree3.isEmpty());
 		
-		System.out.println(tree2.toString());
-	    System.out.println(tree2.containsValue(o2));
-		tree3.toString();
+		System.out.println("After BiFunktion\n"+tree3.toString());
+	    System.out.println(tree3.containsKey(50));
+
 	}
 
 }

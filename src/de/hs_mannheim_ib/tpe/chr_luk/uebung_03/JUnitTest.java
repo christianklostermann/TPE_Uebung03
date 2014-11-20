@@ -25,6 +25,8 @@ public class JUnitTest<K, V> {
 		o3 = "3";
 		String o4 = new String();
 		o4 = "4";
+		String o5 = new String();
+		o5 = "5";
 
 		tree.put(o.hashCode(), o);
 		tree.put(o2.hashCode(), o2);
@@ -37,29 +39,35 @@ public class JUnitTest<K, V> {
 		System.out.println(tree.size());
 		System.out.println(tree.containsValue(o4));
 		System.out.println(tree.toString());
+		
 
+		tree.remove(50);
+		System.out.println(tree.toString());
 		tree.extractAll(tree2);
-		
-		
+
 
 		tree.putAll(tree2);
 		System.out.println(tree.toString());
 		System.out.println(tree2.toString());
 		
 		
-		BiConsumer biConsumer = (x,y)-> {};
+		BiConsumer<Number, String> biConsumer = (x,y)-> {};
 		
 		tree.forEach(biConsumer);
 		
 
 	
-		BiFunction biFunction = (x,y) -> y+"AAA";
+		BiFunction<Number, String, String> biFunction = (x,y) -> y+"AAA";
 		
 		AssociativeArray<Number, String> tree3 = tree2.map(biFunction);
-		System.out.println(tree3.isEmpty());
-		
+		System.out.println( tree2.map(biFunction));
+
+	    tree3.put(o5.hashCode(), o5);
+	   System.out.println( tree3.remove(53));
 		System.out.println("After BiFunktion\n"+tree3.toString());
 	    System.out.println(tree3.containsKey(50));
+
+	    Dictionary<String,String> dic = new Dictionary<>();
 
 	}
 

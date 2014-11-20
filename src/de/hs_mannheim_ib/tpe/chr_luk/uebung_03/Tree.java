@@ -1,3 +1,4 @@
+
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
 import java.util.function.BiConsumer;
@@ -265,6 +266,9 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		return value;
 	}
 
+	
+	
+	
 	private Node<K, V> getBiggestElemLeftSubT(Node<K, V> child) {
 
 		// go ones left and then only right
@@ -520,11 +524,12 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 			this.map(node.left, biFunction, newTree);
 			this.map(node.right, biFunction, newTree);
-			
 		}
 
-		return newTree;
+		return null;
 
 	}
+
+
 
 }

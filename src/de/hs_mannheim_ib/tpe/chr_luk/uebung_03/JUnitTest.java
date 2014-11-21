@@ -1,77 +1,72 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import org.junit.Test;
 
-
 public class JUnitTest<K, V> {
-	
-	
-	
-
 
 	@Test
-	public void test() {
-		AssociativeArray<Number, String> tree = new Tree<>();
-		AssociativeArray<Number, String> tree2 = new Tree<>();
+	public void testAssociativeArray() {
+		AssociativeArray<Number, Object> tree = new Tree<>();
+		Object object1 = new Object();
+		BiConsumer<Number, Object> bicon = (x, y) -> {
+			System.out.println(x + " " + y);
+		};
+		BiFunction<Number, Object, Object> bifunk = (x, y) -> {
+			y = new String();
+			return y;
+		};
 
-		String o = new String();
-		o = "1";
-		String o2 = new String();
-		o2 = "2";
-		String o3 = new String();
-		o3 = "3";
-		String o4 = new String();
-		o4 = "4";
-		String o5 = new String();
-		o5 = "5";
+		tree.put(object1.hashCode(), object1);
+		assertEquals(tree.size(), 1);
+		assertEquals(tree.containsKey(object1.hashCode()), true);
+		assertEquals(tree.containsValue(object1), true);
 
-		tree.put(o.hashCode(), o);
-		tree.put(o2.hashCode(), o2);
-		tree2.put(o3.hashCode(), o3);
-		tree2.put(o4.hashCode(), o4);
+		tree.forEach(bicon);
+		assertEquals(tree.get(object1.hashCode()), object1);
 
-		System.out.println(tree.containsKey(o.hashCode()));
-		System.out.println(tree.containsKey(564654));
+		tree.clear();
+		assertEquals(tree.size(), 0);
+		assertEquals(tree.isEmpty(), true);
+		tree.put(object1.hashCode(), object1);
+		assertEquals(tree.equals(tree), true);
+		assertEquals(tree.isEmpty(), false);
+		assertEquals(tree.map(bifunk).equals(tree), false);
 
-		System.out.println(tree.size());
-		System.out.println(tree.containsValue(o4));
+		tree = tree.map(bifunk);
+		assertEquals(tree.containsKey(object1.hashCode()), true);
+		assertEquals(tree.containsValue(object1), false);
+		assertEquals(tree.get(object1.hashCode()), new String());
+
+		tree.update(object1.hashCode(), object1);
+		assertEquals(tree.containsValue(object1), true);
 		System.out.println(tree.toString());
-		
-
-	
-		System.out.println(tree.toString());
-		tree.extractAll(tree2);
-
-
-		tree.putAll(tree2);
-		System.out.println(tree.toString());
-		System.out.println(tree2.toString());
-		
-		
-		BiConsumer<Number, String> biConsumer = (x,y)-> {};
-		
-		tree.forEach(biConsumer);
-		
-
-	
-		BiFunction<Number, String, String> biFunction = (x,y) -> y+"AAA";
-		
-		AssociativeArray<Number, String> tree3 = tree2.map(biFunction);
-		System.out.println( tree2.map(biFunction));
-
-	    tree3.put(o5.hashCode(), o5);
-	   System.out.println( tree3.remove(53));
-	   System.out.println( tree3.remove(49));
-		System.out.println("After BiFunktion\n"+tree3.toString());
-	    System.out.println(tree3.containsKey(50));
-
-	    Dictionary<String,String> dic = new Dictionary<>();
-	    
-	    System.out.println(tree2.containsValue(o2));
 
 	}
-
+	@Test
+	public void testDictionary(){
+		Dictionary<String, String> dic= new Dictionary<>();
+		String word = new String();
+		word = "aboretum";
+		
+		dic.put("Baumschule", word);
+		
+		assertEquals(dic.get("Baumschule"),"aboretum");
+		
+	}
+	@Test
+	public void testStringAssoArray(){
+		StringAssociativeArray<Integer, String> stringAssA = new StringAssociativeArray<>();
+		String word = new String();
+		word = "nihil";
+		
+		stringAssA.put(word.hashCode(), word);
+		
+		assertEquals(stringAssA.get(word.hashCode()), "nihil");
+		
+	}
 }

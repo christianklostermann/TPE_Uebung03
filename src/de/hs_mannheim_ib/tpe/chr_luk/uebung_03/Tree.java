@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-public class Tree<K, V> implements AssociativeArray<K, V> {
+ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	private Node<K, V> root;
 
@@ -172,7 +172,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 		if (this.root != null && child != null && k != null) {
 
-			// search game element, save parent and child nodes
+			// search element, save parent and child nodes
 			child = this.searchKey(k);
 			parent = child.getParent();
 
@@ -208,14 +208,14 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 						value = parent.getRight().getV();
 						parent.setRight(null);
 					}
-					// game is inner Node
+					//  is inner Node
 				} else if (child.getRight() != null || child.getLeft() != null) {
 
 					if (child.getLeft() == null) {
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value.equals(parent.getLeft().getV());
+							value = parent.getLeft().getV();
 							parent.setLeft(child.getRight());
 						}
 						if (parent.getRight() != null
@@ -478,7 +478,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
 
 		if (node != null) {
-
+	
 			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);

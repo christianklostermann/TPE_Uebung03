@@ -1,6 +1,8 @@
-
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
+
+
+import java.util.LinkedList;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
@@ -14,7 +16,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	public Tree(K k, V v) {
-		this.root = new Node<K, V>(k, v, null, null,null);
+		this.root = new Node<K, V>(k, v, null, null, null);
 
 	}
 
@@ -29,7 +31,8 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 		private V v;
 
-		public Node(K k, V v, Node<K, V> left, Node<K, V> right,Node<K, V> parent) {
+		public Node(K k, V v, Node<K, V> left, Node<K, V> right,
+		        Node<K, V> parent) {
 			this.k = k;
 			this.v = v;
 			this.left = left;
@@ -114,12 +117,12 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		}
 
 		public Node<K, V> getParent() {
-	        return parent;
-        }
+			return parent;
+		}
 
 		public void setParent(Node<K, V> parent) {
-	        this.parent = parent;
-        }
+			this.parent = parent;
+		}
 	}
 
 	@Override
@@ -134,8 +137,8 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 			Node<K, V> parent = null; // parent of child
 			Node<K, V> child = this.root;
 			if (child == null) { // empty tree
-				this.root = new Node<K, V>(k, v, null, null,null);
-				
+				this.root = new Node<K, V>(k, v, null, null, null);
+
 				return;
 			}
 
@@ -154,10 +157,10 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 			// parent node found
 			if (parent.compareTo(k) < 0) {
 				// insert left from parent
-				parent.setLeft(new Node<K, V>(k, v, null, null,parent));
+				parent.setLeft(new Node<K, V>(k, v, null, null, parent));
 			} else {
 				// insert right from parent
-				parent.setRight(new Node<K, V>(k, v, null, null,parent));
+				parent.setRight(new Node<K, V>(k, v, null, null, parent));
 			}
 		}
 	}
@@ -168,38 +171,19 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		Node<K, V> child = this.root;
 		V value = null;
 
-		
-
 		if (this.root != null && child != null && k != null) {
 
 			// search game element, save parent and child nodes
-
-			while (child != null) {
-
-				if (child.compareTo(k) == 0) {
-
-					break;
-				}
-
-				parent = child;
-
-				if (child.compareTo(k) < 0) {
-					child = child.getRight();
-
-				} else if (child.compareTo(k) > 0) {
-					child = child.getLeft();
-
-				}
-
-			}
-
-			// no empty tree 
+			child = this.search(k);	
+			parent = child.getParent();
+			
+			// no empty tree
 			if (child != null) {
 				if (this.root.compareTo(k) == 0) {
 
 					if (this.root.getLeft() == null) {
 						this.root = this.root.getRight();
-						
+
 					} else if (this.root.getRight() == null) {
 						this.root = this.root.getLeft();
 					} else if (this.root.getRight() != null
@@ -216,13 +200,13 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 					if (parent.getLeft() != null
 					        && parent.getLeft().equals(child)) {
-						value.equals(parent.getLeft().getV());
-						parent.setLeft(null);
+						value = parent.getLeft().getV();
+						parent.left = null;
 
 					}
 					if (parent.getRight() != null
 					        && parent.getRight().equals(child)) {
-						value.equals(parent.getRight().getV());
+						value = parent.getRight().getV();
 						parent.setRight(null);
 					}
 					// game is inner Node
@@ -237,7 +221,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value.equals(parent.getRight().getV());
+							value = parent.getRight().getV();
 							parent.setRight(child.getRight());
 						}
 					} else if (child.getRight() == null && parent != null) {
@@ -249,14 +233,14 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value.equals(parent.getRight().getV());
+							value = parent.getRight().getV();
 							parent.setRight(child.getLeft());
 						}
 					} else if (child != null && parent != null) {
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value.equals(parent.getLeft().getV());
+							value = parent.getLeft().getV();
 							Node<K, V> big = getBiggestElemLeftSubT(child);
 							parent.setLeft(big);
 							big.setLeft(child.getLeft());
@@ -264,7 +248,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 						}
 						if (parent.getRight() != null
 						        && parent.getRight().equals(child)) {
-							value.equals(parent.getRight().getV());
+							value = parent.getRight().getV();
 							Node<K, V> big = getBiggestElemLeftSubT(child);
 							parent.setRight(big);
 
@@ -281,9 +265,6 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		return value;
 	}
 
-	
-	
-	
 	private Node<K, V> getBiggestElemLeftSubT(Node<K, V> child) {
 
 		// go ones left and then only right
@@ -306,7 +287,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		}
 
 		Node<K, V> newTmp = new Node<K, V>(tmp.getK(), tmp.getV(),
-		        tmp.getLeft(), tmp.getRight(),tmpParent);
+		        tmp.getLeft(), tmp.getRight(), tmpParent);
 		tmp = null;
 
 		return newTmp;
@@ -336,90 +317,81 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		return false;
 	}
 
-	@Override
-	public boolean containsValue(V v) {
 
-		if (this.search(this.root, v) != null) {
+	/*
+		public boolean containsValue(V v) {
+	if (this.search(this.root, v) != null) {
 			return true;
 		} else {
 			return false;
 		}
 
+	}*/
+
+	/*
+	 * private Node<K, V> search(Node<K, V> node, V value) { if (node == null) {
+	 * return null; } if (node.getV().equals(value)) { return node; } if (node
+	 * != null) { search(node.getLeft(), value); search(node.getRight(), value);
+	 * } return null; }
+	 */
+	private Node<K,V> search(K k) {
+
+	
+		return this.BFS(k);
 	}
 
-	private Node<K, V> search(Node<K, V> node, V value) {
-		if (node == null) {
-			return null;
-		}
-		if (node.getV().equals(value)) {
-			return node;
-		}
-		if (node != null) {
-			search(node.getLeft(), value);
-			search(node.getRight(), value);
+	private Node<K,V> BFS(K k) {
+		if (k != null) {
+			LinkedList<Node<K,V>> level = new LinkedList<>();
+
+			level.add(this.root);
+
+			while (!level.isEmpty()) {
+				Tree<K, V>.Node<K, V> node = level.poll();
+
+				if (node.getK().equals(k)) {
+			
+					return node;
+				} 
+
+				if (node.left != null)
+					level.add(node.left);
+				if (node.right != null)
+					level.add(node.right);
+			}
 		}
 		return null;
 	}
+	
 
-	public String  toString() {
+	public String toString() {
 		String erg = "";
-		
-		erg+="Print Tree\n";
-		erg+="-------------";
-		erg+=""+printhelper(this.root, 0);
-		erg+="_____________\n";
-		
-		
+
+		erg += "Print Tree\n";
+		erg += "-------------";
+		erg += "" + printhelper(this.root, 0);
+		erg += "_____________\n";
+
 		return erg;
 	}
 
 	private String printhelper(Node<K, V> node, int level) {
 		String distance = "";
-		String erg="\n";
+		String erg = "\n";
 		for (int i = 0; i < level; i++) {
 			distance += " ";
 		}
 		if (node != null) {
-			erg+= printhelper(node.getRight(), level + 1);
-			erg+= distance + "[" + level + "][#" + node.getK()+"~"+node.getV().toString()+"]";
-			erg+= printhelper(node.getLeft(), level + 1);
-		}
-		
-		return erg+"";
-	}
-
-	public Node<K, V> depthFirstSearch(K k) {
-
-		return DFS2(root, k);
-	}
-
-	private Node<K, V> DFS2(Node<K, V> node, K k) {
-
-		Node<K, V> left = null;
-		Node<K, V> right = null;
-
-		if (node != null) {
-
-			if (node.equals(k)) {
-
-				return node;
-			}
-
-			left = DFS2(node.getLeft(), k);
-
-			if (left == null) {
-				right = DFS2(node.getRight(), k);
-			}
-
+			erg += printhelper(node.getRight(), level + 1);
+			erg += distance + "[" + level + "][#" + node.getK() + "~"
+			        + node.getV().toString() + "]";
+			erg += printhelper(node.getLeft(), level + 1);
 		}
 
-		if (left != null) {
-			return left;
-		} else {
-			return right;
-		}
-
+		return erg + "";
 	}
+
+
 
 	@Override
 	public void clear() {
@@ -534,7 +506,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
 
 		if (node != null) {
-		
+
 			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);
@@ -545,6 +517,10 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	}
 
-
+	@Override
+    public boolean containsValue(V v) {
+	    // TODO Auto-generated method stub
+	    return false;
+    }
 
 }

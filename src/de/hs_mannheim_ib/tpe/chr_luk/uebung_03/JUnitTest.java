@@ -41,7 +41,7 @@ public class JUnitTest<K, V> {
 		System.out.println(tree.toString());
 		
 
-		tree.remove(50);
+	
 		System.out.println(tree.toString());
 		tree.extractAll(tree2);
 

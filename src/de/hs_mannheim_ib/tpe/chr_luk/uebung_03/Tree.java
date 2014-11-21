@@ -130,8 +130,8 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 		return (this.root == null);
 	}
-
-	public void insert(K k, V v) {
+	@Override
+	public void put(K k, V v) {
 
 		if (k != null && v != null) {
 			Node<K, V> parent = null; // parent of child
@@ -228,7 +228,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 						if (parent.getLeft() != null
 						        && parent.getLeft().equals(child)) {
-							value.equals(parent.getLeft().getV());
+							value = parent.getLeft().getV();
 							parent.setLeft(child.getLeft());
 						}
 						if (parent.getRight() != null
@@ -401,14 +401,10 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public V get(K k) {
-		return this.getNode(k).getV();
+		return this.search(k).getV();
 	}
 
-	@Override
-	public void put(K k, V v) {
-		this.insert(k, v);
 
-	}
 
 	@Override
 	public int size() {
@@ -425,29 +421,10 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void update(K k, V v) {
-		this.getNode(k).setV(v);
+		this.search(k).setV(v);
 	}
 
-	private Node<K, V> getNode(K k) {
-		Node<K, V> tmp = root;
 
-		if (tmp.getK().equals(k)) {
-
-			while (tmp != null) {
-
-				if (tmp.compareTo(k) == 0) {
-
-					return tmp;
-				}
-				if (tmp.compareTo(k) < 0) {
-					tmp = tmp.getRight();
-				} else {
-					tmp = tmp.getLeft();
-				}
-			}
-		}
-		return null;
-	}
 
 	@Override
 	public void forEach(BiConsumer<K, V> biConsumer) {

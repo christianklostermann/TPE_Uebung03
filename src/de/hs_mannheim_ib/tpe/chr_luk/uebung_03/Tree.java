@@ -1,7 +1,5 @@
 package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
-
-
 import java.util.LinkedList;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -130,6 +128,7 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 		return (this.root == null);
 	}
+
 	@Override
 	public void put(K k, V v) {
 
@@ -174,9 +173,9 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		if (this.root != null && child != null && k != null) {
 
 			// search game element, save parent and child nodes
-			child = this.search(k);	
+			child = this.searchKey(k);
 			parent = child.getParent();
-			
+
 			// no empty tree
 			if (child != null) {
 				if (this.root.compareTo(k) == 0) {
@@ -318,41 +317,24 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 
-	/*
-		public boolean containsValue(V v) {
-	if (this.search(this.root, v) != null) {
-			return true;
-		} else {
-			return false;
-		}
+	private Node<K, V> searchValue(V v) {
 
-	}*/
-
-	/*
-	 * private Node<K, V> search(Node<K, V> node, V value) { if (node == null) {
-	 * return null; } if (node.getV().equals(value)) { return node; } if (node
-	 * != null) { search(node.getLeft(), value); search(node.getRight(), value);
-	 * } return null; }
-	 */
-	private Node<K,V> search(K k) {
-
-	
-		return this.BFS(k);
+		return this.BFS(v);
 	}
 
-	private Node<K,V> BFS(K k) {
-		if (k != null) {
-			LinkedList<Node<K,V>> level = new LinkedList<>();
+	private Node<K, V> BFS(V v) {
+		if (v != null) {
+			LinkedList<Node<K, V>> level = new LinkedList<>();
 
 			level.add(this.root);
 
 			while (!level.isEmpty()) {
 				Tree<K, V>.Node<K, V> node = level.poll();
 
-				if (node.getK().equals(k)) {
-			
+				if (node.getV().equals(v)) {
+
 					return node;
-				} 
+				}
 
 				if (node.left != null)
 					level.add(node.left);
@@ -362,7 +344,26 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		}
 		return null;
 	}
-	
+
+	private Node<K, V> searchKey(K k) {
+		return this.searchKey(this.root, k);
+	}
+
+	private Node<K, V> searchKey(Node<K, V> node, K k) {
+
+		if (k != null || node == null) {
+			if (node.compareTo(k) == 0) {
+				return node;
+			} else if (node.compareTo(k) == 1) {
+				return this.searchKey(node.right, k);
+
+			} else {
+				return this.searchKey(node.left, k);
+			}
+
+		}
+		return null;
+	}
 
 	public String toString() {
 		String erg = "";
@@ -391,8 +392,6 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 		return erg + "";
 	}
 
-
-
 	@Override
 	public void clear() {
 		this.root = null;
@@ -401,10 +400,8 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public V get(K k) {
-		return this.search(k).getV();
+		return this.searchKey(k).getV();
 	}
-
-
 
 	@Override
 	public int size() {
@@ -421,10 +418,8 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void update(K k, V v) {
-		this.search(k).setV(v);
+		this.searchKey(k).setV(v);
 	}
-
-
 
 	@Override
 	public void forEach(BiConsumer<K, V> biConsumer) {
@@ -495,9 +490,13 @@ public class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-    public boolean containsValue(V v) {
-	    // TODO Auto-generated method stub
-	    return false;
-    }
+	public boolean containsValue(V v) {
+		if (searchValue(v) != null) {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 
 }

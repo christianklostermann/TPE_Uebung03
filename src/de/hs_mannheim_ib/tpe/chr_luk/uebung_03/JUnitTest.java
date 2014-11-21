@@ -64,10 +64,13 @@ public class JUnitTest<K, V> {
 
 	    tree3.put(o5.hashCode(), o5);
 	   System.out.println( tree3.remove(53));
+	   System.out.println( tree3.remove(49));
 		System.out.println("After BiFunktion\n"+tree3.toString());
 	    System.out.println(tree3.containsKey(50));
 
 	    Dictionary<String,String> dic = new Dictionary<>();
+	    
+	    System.out.println(tree2.containsValue(o2));
 
 	}
 

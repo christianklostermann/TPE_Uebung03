@@ -18,6 +18,8 @@ import java.util.function.BiFunction;
 
 	}
 
+
+
 	@SuppressWarnings("hiding")
 	class Node<K, V> {
 
@@ -42,14 +44,14 @@ import java.util.function.BiFunction;
 		 * @return the k
 		 */
 		public K getK() {
-			return k;
+			return this.k;
 		}
 
 		/**
 		 * @return the v
 		 */
 		public V getV() {
-			return v;
+			return this.v;
 		}
 
 		public int compareTo(K k) {
@@ -121,6 +123,14 @@ import java.util.function.BiFunction;
 		public void setParent(Node<K, V> parent) {
 			this.parent = parent;
 		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+        @Override
+        public String toString() {
+	        return "{KEY="+this.k +", KEY="+this.v+"}";
+        }
 	}
 
 	@Override
@@ -441,14 +451,14 @@ import java.util.function.BiFunction;
 	public void putAll(AssociativeArray<K, V> b) {
 		if (b instanceof Tree) {
 			Tree<K, V> tree = (Tree<K, V>) b;
-			this.putAll(tree.getRoot());
+			this.putAll(tree.root);
 		}
 	}
 
 	/**
 	 * @return the root
 	 */
-	private Node<K, V> getRoot() {
+	protected Node<K, V> getRoot() {
 		return this.root;
 	}
 

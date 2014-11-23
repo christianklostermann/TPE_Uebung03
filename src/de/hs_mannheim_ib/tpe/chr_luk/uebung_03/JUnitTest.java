@@ -54,8 +54,15 @@ public class JUnitTest<K, V> {
 		word = "aboretum";
 		
 		dic.put("Baumschule", word);
+		dic.put("Baumreihe", word);
 		
 		assertEquals(dic.get("Baumschule"),"aboretum");
+		
+		String[] keys = dic.keys();
+		
+		for(String str : keys){
+			System.out.println(str);
+		}
 		
 	}
 	@Test

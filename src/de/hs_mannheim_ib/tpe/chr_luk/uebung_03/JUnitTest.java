@@ -2,6 +2,8 @@ package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
@@ -44,7 +46,7 @@ public class JUnitTest<K, V> {
 
 		tree.update(object1.hashCode(), object1);
 		assertEquals(tree.containsValue(object1), true);
-		System.out.println(tree.toString());
+	
 
 	}
 	@Test
@@ -58,9 +60,9 @@ public class JUnitTest<K, V> {
 		dic.put("Baumschule", word);
 		dic.put("Baumreihe", word);
 		
-		for(int i = 0;i < 20;i++){
+		for(int i = 0;i < 2;i++){
 		
-			dic.put(""+Math.random(),"test"+i);
+			dic.put(""+ SessionIdentifierGenerator.nextSessionId(),"test"+i);
 		}
 		
 		assertEquals(dic.get("Baumschule"),"aboretum");
@@ -68,15 +70,33 @@ public class JUnitTest<K, V> {
 		String[] keys   = dic.keys();
 		String[] values = dic.values();
 		
-		assertEquals(keys.length,22);
-		assertEquals(values.length,22);
+		assertEquals(keys.length,4);
+		assertEquals(values.length,4);
 		
-		System.out.println(dic.toString());
+		dic.containsKey("0.001");
+		
+	
+		System.out.println(dic);
+		dic.remove("Baumreihe");
+		dic.remove("Baum");
+		System.out.println(dic);
+		
+		
 
 		
 		
 		
 	}
+	
+	public final static class SessionIdentifierGenerator {
+		  private static SecureRandom random = new SecureRandom();
+
+		  public static String nextSessionId() {
+		    return new BigInteger(130, random).toString(32);
+		  }
+		}
+	
+	
 	@Test
 	public void testStringAssoArray(){
 		StringAssociativeArray<Integer, String> stringAssA = new StringAssociativeArray<>();

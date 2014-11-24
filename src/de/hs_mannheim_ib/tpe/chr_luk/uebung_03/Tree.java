@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
- class Tree<K, V> implements AssociativeArray<K, V> {
+class Tree<K, V> implements AssociativeArray<K, V> {
 
 	private Node<K, V> root;
 
@@ -17,8 +17,6 @@ import java.util.function.BiFunction;
 		this.root = new Node<K, V>(k, v, null, null, null);
 
 	}
-
-
 
 	@SuppressWarnings("hiding")
 	class Node<K, V> {
@@ -124,13 +122,15 @@ import java.util.function.BiFunction;
 			this.parent = parent;
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see java.lang.Object#toString()
 		 */
-        @Override
-        public String toString() {
-	        return "{KEY="+this.k +", KEY="+this.v+"}";
-        }
+		@Override
+		public String toString() {
+			return "{KEY=" + this.k + ", KEY=" + this.v + "}";
+		}
 	}
 
 	@Override
@@ -184,19 +184,21 @@ import java.util.function.BiFunction;
 
 			// search element, save parent and child nodes
 			child = this.searchKey(k);
-			parent = child.getParent();
+			if (child != null) {
+				parent = child.getParent();
+			}
 
 			// no empty tree
 			if (child != null) {
 				if (this.root.compareTo(k) == 0) {
 
-					if (this.root.getLeft() == null) {
-						this.root = this.root.getRight();
+					if (this.root.left == null) {
+						this.root = this.root.right;
 
 					} else if (this.root.getRight() == null) {
-						this.root = this.root.getLeft();
-					} else if (this.root.getRight() != null
-					        && this.root.getLeft() != null) {
+						this.root = this.root.left;
+					} else if (this.root.right != null
+					        && this.root.left != null) {
 						Node<K, V> big = getBiggestElemLeftSubT(this.root);
 						big.setLeft(this.root.getLeft());
 						big.setRight(this.root.getRight());
@@ -218,7 +220,7 @@ import java.util.function.BiFunction;
 						value = parent.getRight().getV();
 						parent.setRight(null);
 					}
-					//  is inner Node
+					// is inner Node
 				} else if (child.getRight() != null || child.getLeft() != null) {
 
 					if (child.getLeft() == null) {
@@ -326,7 +328,6 @@ import java.util.function.BiFunction;
 		return false;
 	}
 
-
 	private Node<K, V> searchValue(V v) {
 
 		return this.BFS(v);
@@ -361,7 +362,7 @@ import java.util.function.BiFunction;
 
 	private Node<K, V> searchKey(Node<K, V> node, K k) {
 
-		if (k != null || node == null) {
+		if (k != null && node != null) {
 			if (node.compareTo(k) == 0) {
 				return node;
 			} else if (node.compareTo(k) == 1) {
@@ -380,22 +381,22 @@ import java.util.function.BiFunction;
 
 		erg += "\tPrint Tree\n";
 		erg += "---------------------------------------\n";
-		erg += "" + printhelper(this.root, 0);
+		erg += "" + this.print(this.root, 0);
 		erg += "_______________________________________\n";
 
 		return erg;
 	}
 
-	private String printhelper(Node<K, V> node, int level) {
+	private String print(Node<K, V> node, int level) {
 		String distance = "";
 		String erg = "";
 		for (int i = 0; i < level; i++) {
 			distance += " -";
 		}
 		if (node != null) {
-			erg += printhelper(node.getRight(), level + 1);
-			erg += distance + "[" + level + "]"+node.toString()+"\n";
-			erg += printhelper(node.getLeft(), level + 1);
+			erg += this.print(node.getRight(), level + 1);
+			erg += distance + "[" + level + "]" + node.toString() + "\n";
+			erg += this.print(node.getLeft(), level + 1);
 		}
 
 		return erg + "";
@@ -438,6 +439,16 @@ import java.util.function.BiFunction;
 		}
 	}
 
+	/**
+	 * helper method which recursively manipulate the value of a pair of
+	 * key-values by using a given biConsumer
+	 * 
+	 * @param node
+	 *            (pair of key-values)
+	 * @param biConsumer
+	 *            (lambda expression)
+	 */
+
 	private void forEach(Node<K, V> node, BiConsumer<K, V> biConsumer) {
 		if (node != null) {
 			biConsumer.accept(node.getK(), node.getV());
@@ -455,11 +466,12 @@ import java.util.function.BiFunction;
 	}
 
 	/**
-	 * @return the root
+	 * helper method which recursively insert all nodes into the given
+	 * associative array
+	 * 
+	 * @param node
+	 *            from giben
 	 */
-	protected Node<K, V> getRoot() {
-		return this.root;
-	}
 
 	private void putAll(Node<K, V> node) {
 		if (node != null) {
@@ -483,11 +495,23 @@ import java.util.function.BiFunction;
 
 	}
 
+	/**
+	 * helper method which recursively manipulate the value of a pair of
+	 * key-values by using a given biFunktion
+	 * 
+	 * @param node
+	 *            (pair of key-values)
+	 * @param biFunction
+	 *            (lambda expression)
+	 * @param newTree
+	 *            associative array
+	 * @return a new associative array
+	 */
 	private AssociativeArray<K, V> map(Node<K, V> node,
 	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
 
 		if (node != null) {
-	
+
 			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);
@@ -502,10 +526,10 @@ import java.util.function.BiFunction;
 	public boolean containsValue(V v) {
 		if (searchValue(v) != null) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
-		
+
 	}
 
 }

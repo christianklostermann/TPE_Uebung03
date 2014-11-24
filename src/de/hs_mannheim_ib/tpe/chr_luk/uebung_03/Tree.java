@@ -378,24 +378,23 @@ import java.util.function.BiFunction;
 	public String toString() {
 		String erg = "";
 
-		erg += "Print Tree\n";
-		erg += "-------------";
+		erg += "\tPrint Tree\n";
+		erg += "---------------------------------------\n";
 		erg += "" + printhelper(this.root, 0);
-		erg += "_____________\n";
+		erg += "_______________________________________\n";
 
 		return erg;
 	}
 
 	private String printhelper(Node<K, V> node, int level) {
 		String distance = "";
-		String erg = "\n";
+		String erg = "";
 		for (int i = 0; i < level; i++) {
-			distance += " ";
+			distance += " -";
 		}
 		if (node != null) {
 			erg += printhelper(node.getRight(), level + 1);
-			erg += distance + "[" + level + "][#" + node.getK() + "~"
-			        + node.getV().toString() + "]";
+			erg += distance + "[" + level + "]"+node.toString()+"\n";
 			erg += printhelper(node.getLeft(), level + 1);
 		}
 

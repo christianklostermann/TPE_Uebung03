@@ -49,6 +49,8 @@ public class JUnitTest<K, V> {
 	}
 	@Test
 	public void testDictionary(){
+		
+		
 		Dictionary<String, String> dic= new Dictionary<>();
 		String word = new String();
 		word = "aboretum";
@@ -56,13 +58,23 @@ public class JUnitTest<K, V> {
 		dic.put("Baumschule", word);
 		dic.put("Baumreihe", word);
 		
+		for(int i = 0;i < 20;i++){
+		
+			dic.put(""+Math.random(),"test"+i);
+		}
+		
 		assertEquals(dic.get("Baumschule"),"aboretum");
 		
-		String[] keys = dic.keys();
+		String[] keys   = dic.keys();
+		String[] values = dic.values();
 		
-		for(String str : keys){
-			System.out.println(str);
-		}
+		assertEquals(keys.length,22);
+		assertEquals(values.length,22);
+		
+		System.out.println(dic.toString());
+
+		
+		
 		
 	}
 	@Test

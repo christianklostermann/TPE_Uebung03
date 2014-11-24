@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class JUnitTest<K, V> {
 
-
+	@Test
 	public void testAssociativeArray() {
 		AssociativeArray<Number, Object> tree = new Tree<>();
 		Object object1 = new Object();
@@ -46,72 +46,63 @@ public class JUnitTest<K, V> {
 
 		tree.update(object1.hashCode(), object1);
 		assertEquals(tree.containsValue(object1), true);
-	
 
 	}
+
 	@Test
-	public void testDictionary(){
-		
-		
-		Dictionary<String, String> dic= new Dictionary<>();
+	public void testDictionary() {
+
+		Dictionary<String, String> dic = new Dictionary<>();
 		String word = new String();
 		String word2 = new String();
 		word = "aboretum";
 		word2 = "invictus";
-		
 
-		for(int i = 0;i < 2;i++){
-		
-			dic.put(""+ SessionIdentifierGenerator.nextSessionId(),"test"+i);
+		for (int i = 0; i < 2; i++) {
+
+			dic.put("" + SessionIdentifierGenerator.nextSessionId(), "test" + i);
 		}
 		dic.put("Baumschule", word);
 		dic.put("unbesiegbar", word2);
-		
-		assertEquals(dic.get("Baumschule"),"aboretum");
-		
-		String[] keys   = dic.keys();
+
+		assertEquals(dic.get("Baumschule"), "aboretum");
+
+		String[] keys = dic.keys();
 		String[] values = dic.values();
-		
-		assertEquals(keys.length,4);
-		assertEquals(values.length,4);
-		
+
+		assertEquals(keys.length, 4);
+		assertEquals(values.length, 4);
+
 		dic.containsKey("0.001");
 
-	
 		System.out.println(dic);
 
-		assertEquals(dic.remove("Baumschule"),word);
-		assertEquals(dic.remove("unbesiegbar"),word2);
-		assertEquals(dic.get("Baumschule"),null);
-		assertEquals(dic.get("unbesiegbar"),null);
-		
-		System.out.println(dic);
-		
-		
+		assertEquals(dic.remove("Baumschule"), word);
+		assertEquals(dic.remove("unbesiegbar"), word2);
+		assertEquals(dic.get("Baumschule"), null);
+		assertEquals(dic.get("unbesiegbar"), null);
 
-		
-		
-		
+		System.out.println(dic);
+
 	}
-	
-	public final static class SessionIdentifierGenerator {
-		  private static SecureRandom random = new SecureRandom();
 
-		  public static String nextSessionId() {
-		    return new BigInteger(130, random).toString(32);
-		  }
-		}
-	
-	
-
-	public void testStringAssoArray(){
+	@Test
+	public void testStringAssoArray() {
 		StringAssociativeArray<Integer, String> stringAssA = new StringAssociativeArray<>();
 		String word = new String();
 		word = "nihil";
-		
+
 		stringAssA.put(word.hashCode(), word);
-		
+
 		assertEquals(stringAssA.get(word.hashCode()), "nihil");
-		
+
+	}
+
+	public final static class SessionIdentifierGenerator {
+		private static SecureRandom random = new SecureRandom();
+
+		public static String nextSessionId() {
+			return new BigInteger(130, random).toString(32);
+		}
 	}
 }

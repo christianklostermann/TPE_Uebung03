@@ -58,7 +58,7 @@ public class JUnitTest<K, V> {
 		word = "aboretum";
 		word2 = "invictus";
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 20000; i++) {
 
 			dic.put("" + SessionIdentifierGenerator.nextSessionId(), "test" + i);
 		}
@@ -67,11 +67,11 @@ public class JUnitTest<K, V> {
 
 		assertEquals(dic.get("Baumschule"), "aboretum");
 
-		String[] keys = dic.keys();
+		String[] keys   = dic.keys();
 		String[] values = dic.values();
 
-		assertEquals(keys.length, 4);
-		assertEquals(values.length, 4);
+		assertEquals(keys.length, 20002);
+		assertEquals(values.length, 20002);
 
 		dic.containsKey("0.001");
 

@@ -205,11 +205,8 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 				this.put(left);
 				this.put(right);
-
 			}
-
 		}
-
 		return value;
 	}
 
@@ -368,7 +365,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	private void forEach(Node<K, V> node, BiConsumer<K, V> biConsumer) {
 		if (node != null) {
 			biConsumer.accept(node.getK(), node.getV());
-			forEach(node.getLeft(), biConsumer);
+			forEach(node.getLeft(),  biConsumer);
 			forEach(node.getRight(), biConsumer);
 		}
 	}

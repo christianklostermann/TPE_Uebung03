@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class JUnitTest<K, V> {
 
-	@Test
+
 	public void testAssociativeArray() {
 		AssociativeArray<Number, Object> tree = new Tree<>();
 		Object object1 = new Object();
@@ -55,15 +55,17 @@ public class JUnitTest<K, V> {
 		
 		Dictionary<String, String> dic= new Dictionary<>();
 		String word = new String();
+		String word2 = new String();
 		word = "aboretum";
+		word2 = "invictus";
 		
-		dic.put("Baumschule", word);
-		dic.put("Baumreihe", word);
-		
+
 		for(int i = 0;i < 2;i++){
 		
 			dic.put(""+ SessionIdentifierGenerator.nextSessionId(),"test"+i);
 		}
+		dic.put("Baumschule", word);
+		dic.put("unbesiegbar", word2);
 		
 		assertEquals(dic.get("Baumschule"),"aboretum");
 		
@@ -74,11 +76,15 @@ public class JUnitTest<K, V> {
 		assertEquals(values.length,4);
 		
 		dic.containsKey("0.001");
-		
+
 	
 		System.out.println(dic);
-		dic.remove("Baumreihe");
-		dic.remove("Baum");
+
+		assertEquals(dic.remove("Baumschule"),word);
+		assertEquals(dic.remove("unbesiegbar"),word2);
+		assertEquals(dic.get("Baumschule"),null);
+		assertEquals(dic.get("unbesiegbar"),null);
+		
 		System.out.println(dic);
 		
 		
@@ -97,7 +103,7 @@ public class JUnitTest<K, V> {
 		}
 	
 	
-	@Test
+
 	public void testStringAssoArray(){
 		StringAssociativeArray<Integer, String> stringAssA = new StringAssociativeArray<>();
 		String word = new String();

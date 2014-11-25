@@ -405,16 +405,16 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public AssociativeArray<? super K,? super V> map(BiFunction<K, V, V> biFunction)  {
-		 AssociativeArray<? super K,? super  V> newTree  = null;
+	public AssociativeArray<? extends K,? extends V> map(BiFunction<K, V, V> biFunction)  {
+		 AssociativeArray<? extends K,?extends  V> newTree  = null;
 		 try {
 			  newTree = this.getClass().newInstance();
         } catch (InstantiationException e) {
 	        // TODO Auto-generated catch block
-	        e.printStackTrace();
+	       return null;
         } catch (IllegalAccessException e) {
 	        // TODO Auto-generated catch block
-	        e.printStackTrace();
+	        return null;
         }
 		
 		//AssociativeArray<K, V> newTree = new Tree<K, V>();
@@ -435,17 +435,17 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private AssociativeArray<? super K,? super V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray<? super K, ? super V> newTree) {
+	private AssociativeArray<? extends K,? extends V> map(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, AssociativeArray<? extends K, ? extends V> newTree) {
 
 		if (node != null) {
 
-			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+		 //   newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);
 			this.map(node.right, biFunction, newTree);
 		}
-
+		
 		return newTree;
 
 	}

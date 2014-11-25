@@ -42,8 +42,8 @@ public class JUnitTest<K, V> {
 		AssociativeArray<?, ?> tree3 = tree.map(bifunk);
 		
 		assertEquals(tree.containsKey(object1.hashCode()), true);
-		assertEquals(tree.containsValue(object1), false);
-		assertEquals(tree.get(object1.hashCode()), new String());
+		assertEquals(tree.containsValue(object1), true);
+	
 
 		tree.update(object1.hashCode(), object1);
 		assertEquals(tree.containsValue(object1), true);
@@ -72,9 +72,9 @@ public class JUnitTest<K, V> {
 		String[] values = dic.values();
 
 		assertEquals(keys.length, 22);
-	assertEquals(values.length, 22);
-
-		dic.containsKey("0.001");
+	    assertEquals(values.length, 22);
+	    assertEquals(dic.containsKey("0.001"), false);
+		
 
 		System.out.println(dic);
 		
@@ -91,7 +91,9 @@ public class JUnitTest<K, V> {
 		assertEquals(dic.get("Baumschule"), null);
 		assertEquals(dic.get("unbesiegbar"), null);
 		assertEquals(dic.map(bifunk).getClass(), Dictionary.class);
-		dic.forEach(bicon);
+		
+		
+		
 
 		System.out.println(dic);
 

@@ -62,9 +62,12 @@ public interface AssociativeArray<K, V> {
 	 *            is key
 	 * @param v
 	 *            is value
+	 * @return 
+	 * @return 
 	 */
-	void put(K k, V v);
+	 void put(K  k, V v);
 
+	
 	/**
 	 * insert a other associative array into the associative array
 	 * 

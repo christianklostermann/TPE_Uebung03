@@ -205,8 +205,11 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 				this.put(left);
 				this.put(right);
+
 			}
+
 		}
+
 		return value;
 	}
 
@@ -365,7 +368,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	private void forEach(Node<K, V> node, BiConsumer<K, V> biConsumer) {
 		if (node != null) {
 			biConsumer.accept(node.getK(), node.getV());
-			forEach(node.getLeft(),  biConsumer);
+			forEach(node.getLeft(), biConsumer);
 			forEach(node.getRight(), biConsumer);
 		}
 	}
@@ -402,12 +405,39 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction) {
-		AssociativeArray<K, V> newTree = new Tree<K, V>();
+	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction)  {
+		 AssociativeArray<K, V> newTree  = null;
+		 try {
+			  newTree = this.getClass().newInstance();
+        } catch (InstantiationException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        } catch (IllegalAccessException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
+		
+		//AssociativeArray<K, V> newTree = new Tree<K, V>();
+
 		return this.map(this.root, biFunction, newTree);
 
 	}
-
+	private static class SomeContainer<E>
+	{
+	    E createContents(Class<E> clazz)
+	    {
+	        try {
+	            return clazz.newInstance();
+            } catch (InstantiationException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+            } catch (IllegalAccessException e) {
+	            // TODO Auto-generated catch block
+        		return null;
+            }
+			return null;
+	    }
+	}
 	/**
 	 * helper method which recursively manipulate the value of a pair of
 	 * key-values by using a given biFunktion

@@ -58,7 +58,7 @@ public class JUnitTest<K, V> {
 		word = "aboretum";
 		word2 = "invictus";
 
-		for (int i = 0; i < 20000; i++) {
+		for (int i = 0; i < 20; i++) {
 
 			dic.put("" + SessionIdentifierGenerator.nextSessionId(), "test" + i);
 		}
@@ -70,17 +70,27 @@ public class JUnitTest<K, V> {
 		String[] keys   = dic.keys();
 		String[] values = dic.values();
 
-		assertEquals(keys.length, 20002);
-		assertEquals(values.length, 20002);
+		assertEquals(keys.length, 22);
+	assertEquals(values.length, 22);
 
 		dic.containsKey("0.001");
 
 		System.out.println(dic);
+		
+		BiConsumer<String, String> bicon = (x, y) -> {
+			System.out.println(x + " " + y);
+		};
+		BiFunction<String, String, String> bifunk = (x, y) -> {
+			y = new String();
+			return y;
+		};
 
 		assertEquals(dic.remove("Baumschule"), word);
 		assertEquals(dic.remove("unbesiegbar"), word2);
 		assertEquals(dic.get("Baumschule"), null);
 		assertEquals(dic.get("unbesiegbar"), null);
+		assertEquals(dic.map(bifunk).getClass(), Dictionary.class);
+		dic.forEach(bicon);
 
 		System.out.println(dic);
 
@@ -102,7 +112,7 @@ public class JUnitTest<K, V> {
 		private static SecureRandom random = new SecureRandom();
 
 		public static String nextSessionId() {
-			return new BigInteger(130, random).toString(32);
+			return new BigInteger(130, random).toString(24);
 		}
 	}
 }

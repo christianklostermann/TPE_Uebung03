@@ -375,7 +375,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void putAll(AssociativeArray<K, V> b) {
-		if (b instanceof Tree) {
+		if (b instanceof AssociativeArray) {
 			Tree<K, V> tree = (Tree<K, V>) b;
 			this.putAll(tree.root);
 		}
@@ -407,6 +407,9 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	@Override
 	public AssociativeArray<? extends K,? extends V> map(BiFunction<K, V, V> biFunction)  {
 		 AssociativeArray<? extends K,?extends  V> newTree  = null;
+		 
+		 
+		 
 		 try {
 			  newTree = this.getClass().newInstance();
         } catch (InstantiationException e) {

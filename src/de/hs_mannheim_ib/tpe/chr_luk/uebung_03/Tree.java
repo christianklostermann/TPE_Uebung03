@@ -399,14 +399,14 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void extractAll(AssociativeArray<K, V> b) {
-		if (b instanceof Tree) {
-			((Tree<K, V>) b).putAll(this.root);
-		}
+		
+			this.putAll(this.root);
+		
 	}
 
 	@Override
-	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction)  {
-		 AssociativeArray<K, V> newTree  = null;
+	public AssociativeArray<? super K,? super V> map(BiFunction<K, V, V> biFunction)  {
+		 AssociativeArray<? super K,? super  V> newTree  = null;
 		 try {
 			  newTree = this.getClass().newInstance();
         } catch (InstantiationException e) {
@@ -435,8 +435,8 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private AssociativeArray<K, V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
+	private AssociativeArray<? super K,? super V> map(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, AssociativeArray<? super K, ? super V> newTree) {
 
 		if (node != null) {
 

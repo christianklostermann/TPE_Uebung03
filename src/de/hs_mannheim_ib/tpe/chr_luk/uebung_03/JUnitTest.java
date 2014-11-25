@@ -39,7 +39,8 @@ public class JUnitTest<K, V> {
 		assertEquals(tree.isEmpty(), false);
 		assertEquals(tree.map(bifunk).equals(tree), false);
 
-		tree = tree.map(bifunk);
+		AssociativeArray<?, ?> tree3 = tree.map(bifunk);
+		
 		assertEquals(tree.containsKey(object1.hashCode()), true);
 		assertEquals(tree.containsValue(object1), false);
 		assertEquals(tree.get(object1.hashCode()), new String());

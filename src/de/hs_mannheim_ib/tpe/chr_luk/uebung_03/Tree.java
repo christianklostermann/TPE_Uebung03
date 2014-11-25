@@ -422,22 +422,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		return this.map(this.root, biFunction, newTree);
 
 	}
-	private static class SomeContainer<E>
-	{
-	    E createContents(Class<E> clazz)
-	    {
-	        try {
-	            return clazz.newInstance();
-            } catch (InstantiationException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-            } catch (IllegalAccessException e) {
-	            // TODO Auto-generated catch block
-        		return null;
-            }
-			return null;
-	    }
-	}
+	
 	/**
 	 * helper method which recursively manipulate the value of a pair of
 	 * key-values by using a given biFunktion

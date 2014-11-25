@@ -402,12 +402,24 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction) {
-		AssociativeArray<K, V> newTree = new Tree<K, V>();
-		return this.map(this.root, biFunction, newTree);
+	public AssociativeArray<? super K,? super V> map(BiFunction<K, V, V> biFunction)  {
+		 AssociativeArray<? super K,? super  V> newTree  = null;
+		 try {
+			  newTree = this.getClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+	        e.printStackTrace();
+        }
+//        } catch (IllegalAccessException e) {
+//	        // TODO Auto-generated catch block
+//	        e.printStackTrace();
+//        }
+		
+		//AssociativeArray<K, V> newTree = new Tree<K, V>();
+
+		return this.recursiveMap(this.root, biFunction, newTree);
 
 	}
-
+	
 	/**
 	 * helper method which recursively manipulate the value of a pair of
 	 * key-values by using a given biFunktion
@@ -420,15 +432,15 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private AssociativeArray<K, V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
+	private AssociativeArray<? super K,? super V> recursiveMap(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, AssociativeArray<? super K,? super V> newTree) {
 
 		if (node != null) {
 
 			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
-			this.map(node.left, biFunction, newTree);
-			this.map(node.right, biFunction, newTree);
+			this.recursiveMap(node.left, biFunction, newTree);
+			this.recursiveMap(node.right, biFunction, newTree);
 		}
 
 		return newTree;

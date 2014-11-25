@@ -114,6 +114,6 @@ public interface AssociativeArray<K, V> {
 
 	void extractAll(AssociativeArray<K, V> associativeArray);
 
-	AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction);
+	AssociativeArray<?, ?> map(BiFunction<K, V, V> biFunction);
 
 }

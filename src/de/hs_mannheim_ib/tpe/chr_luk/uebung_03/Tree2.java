@@ -28,13 +28,13 @@ public class Tree2<K extends Comparable<K>, V> implements AssociativeArray2<K, V
 		if(node.right != null) list.addAll(getNodeList(node.right));
 		return list;
 	}
-	
+	/*
 	public Map<K, V> getNodeMap(Node node) {
 		Map<K, V> map = new HashMap();
 		if(node.left != null) map.putAll(getNodeMap(node.left));
 		if(node.right != null) map.putAll(getNodeMap(node.right));
 		return map;
-	}
+	}*/
 	
 	private Node root;
 	

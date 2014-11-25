@@ -39,10 +39,11 @@ public class JUnitTest<K, V> {
 		assertEquals(tree.isEmpty(), false);
 		assertEquals(tree.map(bifunk).equals(tree), false);
 
-		tree = tree.map(bifunk);
+		AssociativeArray<?, ?> tree3 = tree.map(bifunk);
+		
 		assertEquals(tree.containsKey(object1.hashCode()), true);
-		assertEquals(tree.containsValue(object1), false);
-		assertEquals(tree.get(object1.hashCode()), new String());
+		assertEquals(tree.containsValue(object1), true);
+		
 
 		tree.update(object1.hashCode(), object1);
 		assertEquals(tree.containsValue(object1), true);
@@ -58,7 +59,7 @@ public class JUnitTest<K, V> {
 		word = "aboretum";
 		word2 = "invictus";
 
-		for (int i = 0; i < 20000; i++) {
+		for (int i = 0; i < 20; i++) {
 
 			dic.put("" + SessionIdentifierGenerator.nextSessionId(), "test" + i);
 		}
@@ -70,8 +71,8 @@ public class JUnitTest<K, V> {
 		String[] keys   = dic.keys();
 		String[] values = dic.values();
 
-		assertEquals(keys.length, 20002);
-		assertEquals(values.length, 20002);
+		assertEquals(keys.length, 22);
+		assertEquals(values.length, 22);
 
 		dic.containsKey("0.001");
 

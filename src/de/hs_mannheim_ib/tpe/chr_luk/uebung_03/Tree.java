@@ -399,46 +399,31 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void extractAll(AssociativeArray<K, V> b) {
-		
-			this.putAll(this.root);
-		
+
+		this.putAll(this.root);
+
 	}
 
 	@Override
-	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction)  {
-		 AssociativeArray< K, V> newTree  = null;
-		 
-		 
-		 
-		 try {
-			  newTree = this.getClass().newInstance();
-        } catch (InstantiationException e) {	    
-	       return null;
-        } catch (IllegalAccessException e) {	  
-	        return null;
-        }
-		
-		//AssociativeArray<K, V> newTree = new Tree<K, V>();
+	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction) {
 
-		return this.map(this.root, biFunction, newTree);
+		return this.map(this.root, biFunction,
+		        this.newInstance(this.getClass()));
 
 	}
+
+	public static <T> T newInstance(Class<T> type) {
+
+		try {
+			return type.newInstance();
+		} catch (InstantiationException e) {
+			return null;
+		} catch (IllegalAccessException e) {
+			return null;
+		}
 	
-	public static <T> T newInstance( Class<T> type )
-	{
-	 
-	    try {
-	        return type.newInstance();
-        } catch (InstantiationException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        } catch (IllegalAccessException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
-	 return null;
 	}
-	
+
 	/**
 	 * helper method which recursively manipulate the value of a pair of
 	 * key-values by using a given biFunktion
@@ -452,16 +437,16 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 * @return a new associative array
 	 */
 	private AssociativeArray<K, V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray< K,  V> newTree) {
+	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
 
 		if (node != null) {
 
-		    newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);
 			this.map(node.right, biFunction, newTree);
 		}
-		
+
 		return newTree;
 
 	}

@@ -90,7 +90,7 @@ public class JUnitTest<K, V> {
 		assertEquals(dic.get("unbesiegbar"), null);
 		assertEquals(dic.map(bifunk).getClass(), Dictionary.class);
 		
-		 dic.putAll(new Dictionary<>());
+		 dic.putAll(dic);
 		
 		 Dictionary<String, String> tmp = (Dictionary<String, String>) dic.map(bifunk);
 		

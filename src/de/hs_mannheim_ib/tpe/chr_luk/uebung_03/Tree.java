@@ -378,11 +378,8 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	@Override
 	public void putAll(Tree<? extends K, ? extends V> b) {
 	
-		if(b.getClass().equals(this.getClass())){			
-			
-                  System.out.println("test test");
 			this.putAll(b.root);
-		}	
+			
 	}
 
 	/**

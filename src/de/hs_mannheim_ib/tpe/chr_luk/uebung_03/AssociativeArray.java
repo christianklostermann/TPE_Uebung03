@@ -75,7 +75,7 @@ public interface AssociativeArray<K, V> {
 	 *            the one you want to insert
 	 */
 
-	void putAll(AssociativeArray<K, V> associativeArray);
+	 void putAll(Tree<? extends K, ? extends V> b);
 
 	/**
 	 * removes the pair of key-values by given key
@@ -118,5 +118,11 @@ public interface AssociativeArray<K, V> {
 	void extractAll(AssociativeArray<K, V> associativeArray);
 
 	AssociativeArray<?, ?> map(BiFunction<K, V, V> biFunction);
+
+	
+
+	
+
+	
 
 }

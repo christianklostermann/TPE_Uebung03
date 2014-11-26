@@ -78,9 +78,7 @@ public class JUnitTest<K, V> {
 
 		System.out.println(dic);
 		
-		BiConsumer<String, String> bicon = (x, y) -> {
-			System.out.println(x + " " + y);
-		};
+
 		BiFunction<String, String, String> bifunk = (x, y) -> {
 			y = new String();
 			return y;
@@ -91,6 +89,8 @@ public class JUnitTest<K, V> {
 		assertEquals(dic.get("Baumschule"), null);
 		assertEquals(dic.get("unbesiegbar"), null);
 		assertEquals(dic.map(bifunk).getClass(), Dictionary.class);
+		
+		 dic.putAll(new Dictionary<>());
 		
 		 Dictionary<String, String> tmp = (Dictionary<String, String>) dic.map(bifunk);
 		

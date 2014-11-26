@@ -8,6 +8,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	private Node<K, V> root;
 
+
 	public Tree() {
 		this.root = null;
 
@@ -15,6 +16,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	public Tree(K k, V v) {
 		this.root = new Node<K, V>(k, v, null, null, null);
+	
 
 	}
 
@@ -374,11 +376,13 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public void putAll(AssociativeArray<K, V> b) {
-		if (b instanceof AssociativeArray) {
-			Tree<K, V> tree = (Tree<K, V>) b;
-			this.putAll(tree.root);
-		}
+	public void putAll(Tree<? extends K, ? extends V> b) {
+	
+		if(b.getClass().equals(this.getClass())){			
+			
+                  System.out.println("test test");
+			this.putAll(b.root);
+		}	
 	}
 
 	/**
@@ -386,10 +390,10 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 * associative array
 	 * 
 	 * @param node
-	 *            from giben
+	 *            from given
 	 */
 
-	private void putAll(Node<K, V> node) {
+	private void putAll(Tree<? extends K, ? extends V>.Node<? extends K, ? extends V> node) {
 		if (node != null) {
 			this.put(node.getK(), node.getV());
 			putAll(node.getLeft());
@@ -412,7 +416,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	}
 
-	public static <T> T newInstance(Class<T> type) {
+	public <T> T newInstance(Class<T> type) {
 
 		try {
 			return type.newInstance();

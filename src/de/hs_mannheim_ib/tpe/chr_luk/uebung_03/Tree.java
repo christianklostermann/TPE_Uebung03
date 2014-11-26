@@ -405,18 +405,16 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public AssociativeArray<? extends K,? extends V> map(BiFunction<K, V, V> biFunction)  {
-		 AssociativeArray<? extends K,?extends  V> newTree  = null;
+	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction)  {
+		 AssociativeArray< K, V> newTree  = null;
 		 
 		 
 		 
 		 try {
 			  newTree = this.getClass().newInstance();
-        } catch (InstantiationException e) {
-	        // TODO Auto-generated catch block
+        } catch (InstantiationException e) {	    
 	       return null;
-        } catch (IllegalAccessException e) {
-	        // TODO Auto-generated catch block
+        } catch (IllegalAccessException e) {	  
 	        return null;
         }
 		
@@ -424,6 +422,21 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 		return this.map(this.root, biFunction, newTree);
 
+	}
+	
+	public static <T> T newInstance( Class<T> type )
+	{
+	 
+	    try {
+	        return type.newInstance();
+        } catch (InstantiationException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        } catch (IllegalAccessException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
+	 return null;
 	}
 	
 	/**
@@ -438,12 +451,12 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private AssociativeArray<? extends K,? extends V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray<? extends K, ? extends V> newTree) {
+	private AssociativeArray<K, V> map(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, AssociativeArray< K,  V> newTree) {
 
 		if (node != null) {
 
-		 //   newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+		    newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, newTree);
 			this.map(node.right, biFunction, newTree);

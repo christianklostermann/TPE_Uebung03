@@ -12,6 +12,6 @@ package de.hs_mannheim_ib.tpe.chr_luk.uebung_03;
  * @param <V> as String
  */
 
-public class StringAssociativeArray<K extends Integer,V extends String> extends Tree<K , V> {
+public class StringAssociativeArray<K extends String,V > extends Tree<K , V> {
 
 }

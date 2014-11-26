@@ -127,7 +127,7 @@ public interface AssociativeArray<K, V> {
 	 * as the class itself
 	 * 
 	 * 
-	 * @param biFunction a lambda expresssion whick manipulates only the value
+	 * @param biFunction a lambda expression which manipulates only the value
 	 * @return a new sub-class of AssociativeArray, like tree or dictionary
 	 */
 

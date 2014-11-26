@@ -15,6 +15,9 @@ public class JUnitTest<K, V> {
 	BiConsumer<Number, Object> bicon = (x, y) -> {
 		System.out.println(x + " " + y);
 	};
+	BiConsumer<String, String> biconString = (x, y) -> {
+		x = "ALLKEYSAREQUAL";
+	};
 
 	BiFunction<Number, Object, Object> biFunk = (x, y) -> {
 		y = new String();
@@ -24,8 +27,16 @@ public class JUnitTest<K, V> {
 		y = new String();
 		return y;
 	};
+	BiFunction<Integer, Integer, Integer> biFunkIntInt = (x, y) -> {
+		y = new Integer(557548);
+		return y;
+	};
 
 	BiFunction<String, String, String> biFunkString = (x, y) -> {
+		y = new String();
+		return y;
+	};
+	BiFunction<String, Object, Object> biFunkObject = (x, y) -> {
 		y = new String();
 		return y;
 	};
@@ -108,6 +119,8 @@ public class JUnitTest<K, V> {
 		assertEquals(dic.get("Baumschule"), null);
 		assertEquals(dic.get("unbesiegbar"), null);
 		assertEquals(dic.map(biFunkString).getClass(), Dictionary.class);
+		dic.forEach(biconString);
+		
 
 		int size = dic.size();
 		dic.putAll(dic);
@@ -119,44 +132,42 @@ public class JUnitTest<K, V> {
 		assertEquals(mapDic.size(), dic.size());
 
 		System.out.println(dic);
-		
-	
 
 	}
 
 	@Test
 	public void testStringAssociativeArray() {
-		StringAssociativeArray<Integer, String> stringAssA = new StringAssociativeArray<>();
+		StringAssociativeArray<String, Object > stringAssA = new StringAssociativeArray<>();
 		String word = new String();
 		word = "nihil";
 		String word2 = "quasar";
 
-		stringAssA.put(word.hashCode(), word);
+		stringAssA.put(word, word);
 
-		assertEquals(stringAssA.get(word.hashCode()), "nihil");
+		assertEquals(stringAssA.get(word), "nihil");
 
 		for (int i = 0; i < 20; i++) {
 
-			stringAssA.put((int) Math.random() * 1000, "VALUE" + i);
+			stringAssA.put(""+i, "VALUE" + i);
 		}
 
-		stringAssA.put(123456789, word);
-		stringAssA.put(word2.hashCode(), word2);
+		stringAssA.put("exNihiloNihilFit", word);
+		stringAssA.put(word2, word2);
 
-		assertEquals(stringAssA.get(word.hashCode()), word);
-		assertEquals(stringAssA.containsKey(-1), false);
-		assertEquals(stringAssA.remove(-1), null);
-		assertEquals(stringAssA.remove(word2.hashCode()), word2);
-		assertEquals(stringAssA.get(word2.hashCode()), null);
-		assertEquals(stringAssA.map(biFunkInt).getClass(),
+		assertEquals(stringAssA.get(word), word);
+		assertEquals(stringAssA.containsKey("A"), false);
+		assertEquals(stringAssA.remove("A"), null);
+		assertEquals(stringAssA.remove(word2), word2);
+		assertEquals(stringAssA.get(word2), null);
+		assertEquals(stringAssA.map(biFunkObject).getClass(),
 		        StringAssociativeArray.class);
 
 		int size = stringAssA.size();
 		stringAssA.putAll(stringAssA);
 		assertEquals(stringAssA.size(), size);
 
-		StringAssociativeArray<Integer, String> mapIn = stringAssA
-		        .map(biFunkInt);
+		StringAssociativeArray<String, String> mapIn = stringAssA
+		        .map(biFunkObject);
 
 		assertEquals(mapIn.getClass(), stringAssA.getClass());
 		assertEquals(mapIn.size(), stringAssA.size());
@@ -172,8 +183,39 @@ public class JUnitTest<K, V> {
 
 		Integer word = new Integer(667384);
 		
+		 int word2 = 4568778;
 
-		
+		 integerAssA.put(word.hashCode(), word);
+
+		assertEquals(integerAssA.get(word.hashCode()),new Integer(667384));
+
+		for (int i = 0; i < 20; i++) {
+
+			integerAssA.put((int) Math.random() * 1000,(int) Math.random() * 1000);
+		}
+
+		integerAssA.put(123456789, word);
+		integerAssA.put(word2, word2);
+
+		assertEquals(integerAssA.get(word.hashCode()), word);
+		assertEquals(integerAssA.containsKey(-1), false);
+		assertEquals(integerAssA.remove(-1), null);
+		assertEquals(integerAssA.remove(word) ,word);
+		assertEquals(integerAssA.get(word2), new Integer(4568778));
+		assertEquals(integerAssA.map(biFunkIntInt).getClass(),
+		        IntegerAssociaticeArray.class);
+
+		int size =integerAssA.size();
+		integerAssA.putAll(integerAssA);
+		assertEquals(integerAssA.size(), size);
+
+		IntegerAssociaticeArray<Integer, Integer> mapIn = integerAssA
+		        .map(biFunkIntInt);
+
+		assertEquals(mapIn.getClass(), integerAssA.getClass());
+		assertEquals(mapIn.size(), integerAssA.size());
+
+		System.out.println(integerAssA);
 
 	}
 

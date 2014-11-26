@@ -17,7 +17,14 @@ import java.util.function.BiConsumer;
 
 public class Dictionary<K extends String, V extends String> extends Tree<K, V> {
 
-	
+	/**
+	 * saves all keys of the {@link AssociativeArray} in an array
+	 * uses a arrayList to save each key by using a lambda expression
+	 * to add them internally to the array list
+	 * 
+	 * @return array with all keys of the array
+	 * 
+	 */
 
 	public String[] keys() {
 
@@ -30,7 +37,14 @@ public class Dictionary<K extends String, V extends String> extends Tree<K, V> {
 		String[] array = new String[list.size()];
 		return list.toArray(array);
 	}
-
+	/**
+	 * saves all keys of the {@link AssociativeArray} in an array
+	 * uses a arrayList to save each values by using a lambda expression
+	 * to add them internally to the array list
+	 * 
+	 * @return array with all values of the array
+	 * 
+	 */
 
 	public String[] values() {
 		ArrayList<String> list = new ArrayList<>();

@@ -62,12 +62,11 @@ public interface AssociativeArray<K, V> {
 	 *            is key
 	 * @param v
 	 *            is value
-	 * @return 
-	 * @return 
+	 * @return
+	 * @return
 	 */
-	 void  put(K  k, V v);
+	void put(K k, V v);
 
-	
 	/**
 	 * insert a other associative array into the associative array
 	 * 
@@ -75,7 +74,7 @@ public interface AssociativeArray<K, V> {
 	 *            the one you want to insert
 	 */
 
-	 void putAll(Tree<? extends K, ? extends V> b);
+	void putAll(Tree<? extends K, ? extends V> b);
 
 	/**
 	 * removes the pair of key-values by given key
@@ -103,13 +102,17 @@ public interface AssociativeArray<K, V> {
 	 *            is value
 	 */
 	void update(K k, V v);
+
 	/**
-	 * Each value of an key-value pair gets manipulated by the given
-	 * lambda expression.
-	 * @param biConsumer the lambda expression which define the manipulation
+	 * Each value of an key-value pair gets manipulated by the given lambda
+	 * expression.
+	 * 
+	 * @param biConsumer
+	 *            the lambda expression which define the manipulation
 	 */
 
 	void forEach(BiConsumer<K, V> biConsumer);
+
 	/**
 	 * 
 	 * @param associativeArray
@@ -117,14 +120,17 @@ public interface AssociativeArray<K, V> {
 
 	void extractAll(AssociativeArray<K, V> associativeArray);
 
-//	AssociativeArray<?, ?> map(BiFunction<K, V, V> biFunction);
+	/**
+	 * gets a biFunction (lambda expression) which consumes
+	 * a value and key, manipulates the value and put 
+	 * key-value pairs into a new tree of the same type 
+	 * as the class itself
+	 * 
+	 * 
+	 * @param biFunction a lambda expresssion whick manipulates only the value
+	 * @return a new sub-class of AssociativeArray, like tree or dictionary
+	 */
 
 	<T> T map(BiFunction<K, V, V> biFunction);
-
-	
-
-	
-
-	
 
 }

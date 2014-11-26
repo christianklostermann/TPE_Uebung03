@@ -4,21 +4,50 @@ import java.util.LinkedList;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
+/**
+ * 
+ * it is a Binary-Tree. with implemented interface {@link AssociativeArray} with
+ * generic parameter K (Key) and V (Value) could handle object or sub-classes
+ * 
+ * the inner class node represents the key-value pairs. *
+ * 
+ * @author
+ *
+ * @param <K>
+ *            is Key of AssociativeArray
+ * @param <V>
+ *            is Value of AssociativeArray
+ */
 class Tree<K, V> implements AssociativeArray<K, V> {
 
 	private Node<K, V> root;
-
 
 	public Tree() {
 		this.root = null;
 
 	}
 
+	/**
+	 * 
+	 * @param k
+	 *            key
+	 * @param v
+	 *            value
+	 */
+
 	public Tree(K k, V v) {
 		this.root = new Node<K, V>(k, v, null, null, null);
-	
 
 	}
+
+	/**
+	 * Inner-class of Tree represents the nodes of the binary-tree
+	 * 
+	 * @author
+	 *
+	 * @param <K>
+	 * @param <V>
+	 */
 
 	@SuppressWarnings("hiding")
 	class Node<K, V> {
@@ -41,18 +70,26 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		}
 
 		/**
-		 * @return the k
+		 * @return the key
 		 */
 		public K getK() {
 			return this.k;
 		}
 
 		/**
-		 * @return the v
+		 * @return the value
 		 */
 		public V getV() {
 			return this.v;
 		}
+
+		/**
+		 * compares the given key with the key of this node
+		 * 
+		 * @param given
+		 *            key
+		 * @return if equal 0, if greater 1 and if smaller -1
+		 */
 
 		public int compareTo(K k) {
 			if (this.k instanceof String && k instanceof String) {
@@ -82,18 +119,40 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 			return 0;
 		}
 
+		/**
+		 * 
+		 * @return Node left child of this node
+		 */
+
 		public Node<K, V> getLeft() {
 			return left;
 		}
+
+		/**
+		 * 
+		 * @param Node
+		 *            the new left child
+		 */
 
 		public void setLeft(Node<K, V> left) {
 			left.parent = this;
 			this.left = left;
 		}
 
+		/**
+		 * 
+		 * @return Node the right child of this node
+		 */
+
 		public Node<K, V> getRight() {
 			return right;
 		}
+
+		/**
+		 * 
+		 * @param Node
+		 *            the new right child of this node
+		 */
 
 		public void setRight(Node<K, V> right) {
 			right.parent = this;
@@ -101,24 +160,35 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		}
 
 		/**
-		 * @param k
-		 *            the k to set
+		 * @param key
+		 *            the key to set
 		 */
 		public void setK(K k) {
 			this.k = k;
 		}
 
 		/**
-		 * @param v
-		 *            the v to set
+		 * @param value
+		 *            the value to set
 		 */
 		public void setV(V v) {
 			this.v = v;
 		}
 
+		/**
+		 * 
+		 * @return parent node of this node
+		 */
+
 		public Node<K, V> getParent() {
 			return parent;
 		}
+
+		/**
+		 * 
+		 * @param parent
+		 *            node of this node
+		 */
 
 		public void setParent(Node<K, V> parent) {
 			this.parent = parent;
@@ -147,6 +217,13 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		this.put(node);
 	}
 
+	/**
+	 * internal use only helper method which recursively adds the given node to
+	 * the {@link AssociativeArray} as {@link Tree}
+	 * 
+	 * @param node
+	 *            which one will be add to the tree!
+	 */
 	private void put(Node<K, V> node) {
 
 		if (node != null) {
@@ -239,6 +316,15 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		return false;
 	}
 
+	/**
+	 * internal use only uses bread-first-search to traverse the tree helper
+	 * method which search a node by a given value
+	 * 
+	 * @param value
+	 *            which should be found into the tree
+	 * @return node which was searched for or null if not found
+	 */
+
 	private Node<K, V> searchValue(V v) {
 
 		return this.BFS(v);
@@ -267,10 +353,29 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		return null;
 	}
 
+	/**
+	 * internal use only uses depth-first-search to traverse the tree helper
+	 * method which search a node by a given key
+	 * 
+	 * @param value
+	 *            which should be found into the tree
+	 * @return node which was searched for
+	 */
 	private Node<K, V> searchKey(K k) {
 
 		return this.searchKey(this.root, k);
 	}
+
+	/**
+	 * internal use only contains to searchKey(K k) it recursively traverse the
+	 * tree
+	 * 
+	 * @param node
+	 *            which is passed due travesty
+	 * @param key
+	 *            which is compared with the nodes of the tree due travesty
+	 * @return node if found or null if not found
+	 */
 
 	private Node<K, V> searchKey(Node<K, V> node, K k) {
 
@@ -289,6 +394,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		return null;
 	}
 
+	@Override
 	public String toString() {
 		String erg = "";
 
@@ -299,6 +405,17 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 		return erg;
 	}
+
+	/**
+	 * internal use only format the tree nodes for output by traverse the tree
+	 * recusivly.
+	 * 
+	 * @param node
+	 *            which to start (mainly root-node)
+	 * @param level
+	 *            of the current depth of the tree
+	 * @return String which contains the formated tree for output
+	 */
 
 	private String print(Node<K, V> node, int level) {
 		String distance = "";
@@ -377,9 +494,9 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 
 	@Override
 	public void putAll(Tree<? extends K, ? extends V> b) {
-	
-			this.putAll(b.root);
-			
+
+		this.putAll(b.root);
+
 	}
 
 	/**
@@ -390,7 +507,8 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            from given
 	 */
 
-	private void putAll(Tree<? extends K, ? extends V>.Node<? extends K, ? extends V> node) {
+	private void putAll(
+	        Tree<? extends K, ? extends V>.Node<? extends K, ? extends V> node) {
 		if (node != null) {
 			this.put(node.getK(), node.getV());
 			putAll(node.getLeft());
@@ -406,16 +524,20 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public  <T> T map(BiFunction<K, V, V> biFunction) {
+	public <T> T map(BiFunction<K, V, V> biFunction) {
 
 		return (T) this.map(this.root, biFunction,
 		        this.newInstance(this.getClass()));
 
 	}
+
 	/**
+	 * helper method produce a new instance of the class itself the type of
+	 * return value is a generic one.
 	 * 
 	 * @param type
-	 * @return
+	 *            is the type of the given class
+	 * @return is a instance of the class itself
 	 */
 
 	public <T> T newInstance(Class<T> type) {
@@ -427,7 +549,7 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 		} catch (IllegalAccessException e) {
 			return null;
 		}
-	
+
 	}
 
 	/**
@@ -438,17 +560,17 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            (pair of key-values)
 	 * @param biFunction
 	 *            (lambda expression)
-	 * @param tree 
+	 * @param tree
 	 * @param newTree
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private <T> T map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, Tree<K,V> tree) {
+	private <T> T map(Node<K, V> node, BiFunction<K, V, V> biFunction,
+	        Tree<K, V> tree) {
 
-		if (node != null) {
+		if (node != null && tree != null) {
 
-		tree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+			tree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
 			this.map(node.left, biFunction, tree);
 			this.map(node.right, biFunction, tree);

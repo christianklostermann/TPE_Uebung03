@@ -406,12 +406,17 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	}
 
 	@Override
-	public AssociativeArray<K, V> map(BiFunction<K, V, V> biFunction) {
+	public  <T> T map(BiFunction<K, V, V> biFunction) {
 
-		return this.map(this.root, biFunction,
+		return (T) this.map(this.root, biFunction,
 		        this.newInstance(this.getClass()));
 
 	}
+	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
 
 	public <T> T newInstance(Class<T> type) {
 
@@ -433,22 +438,23 @@ class Tree<K, V> implements AssociativeArray<K, V> {
 	 *            (pair of key-values)
 	 * @param biFunction
 	 *            (lambda expression)
+	 * @param tree 
 	 * @param newTree
 	 *            associative array
 	 * @return a new associative array
 	 */
-	private AssociativeArray<K, V> map(Node<K, V> node,
-	        BiFunction<K, V, V> biFunction, AssociativeArray<K, V> newTree) {
+	private <T> T map(Node<K, V> node,
+	        BiFunction<K, V, V> biFunction, Tree<K,V> tree) {
 
 		if (node != null) {
 
-			newTree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
+		tree.put(node.getK(), biFunction.apply(node.getK(), node.getV()));
 
-			this.map(node.left, biFunction, newTree);
-			this.map(node.right, biFunction, newTree);
+			this.map(node.left, biFunction, tree);
+			this.map(node.right, biFunction, tree);
 		}
 
-		return newTree;
+		return (T) tree;
 
 	}
 

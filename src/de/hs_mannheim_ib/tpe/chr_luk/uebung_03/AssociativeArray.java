@@ -65,7 +65,7 @@ public interface AssociativeArray<K, V> {
 	 * @return 
 	 * @return 
 	 */
-	 void put(K  k, V v);
+	 void  put(K  k, V v);
 
 	
 	/**
@@ -117,7 +117,9 @@ public interface AssociativeArray<K, V> {
 
 	void extractAll(AssociativeArray<K, V> associativeArray);
 
-	AssociativeArray<?, ?> map(BiFunction<K, V, V> biFunction);
+//	AssociativeArray<?, ?> map(BiFunction<K, V, V> biFunction);
+
+	<T> T map(BiFunction<K, V, V> biFunction);
 
 	
 

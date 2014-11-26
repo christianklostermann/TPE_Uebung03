@@ -44,8 +44,8 @@ public class JUnitTest<K, V> {
 	public final static class SecureRand {
 		private static SecureRandom random = new SecureRandom();
 
-		public static String nextRand(int c) {
-			return new BigInteger(130, random).toString(c);
+		public static String nextRand() {
+			return new BigInteger(130, random).toString();
 		}
 	}
 
@@ -94,7 +94,7 @@ public class JUnitTest<K, V> {
 
 		for (int i = 0; i < 20; i++) {
 
-			dic.put("" + SecureRand.nextRand(24), "VALUE" + i);
+			dic.put("" + SecureRand.nextRand(), "VALUE" + i);
 		}
 
 		dic.put("Baumschule", word);
